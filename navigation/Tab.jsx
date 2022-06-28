@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { View, Image } from "react-native";
 import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
 import WishListScreen from "../screens/WishListScreen";
@@ -8,7 +9,6 @@ import HeartIcon from "../assets/tabIcons/heart.svg";
 import HomeIcon from "../assets/tabIcons/home.svg";
 import SearchIcon from "../assets/tabIcons/search.svg";
 import UserIcon from "../assets/tabIcons/user.svg";
-import { View } from "react-native";
 
 const Tab = createBottomTabNavigator();
 
@@ -28,8 +28,12 @@ export default function Tabs() {
         name="HomeTab"
         component={HomeScreen}
         options={{
-          tabBarIcon: () => (
-            <HomeIcon width={30} height={30} fill={"#C7C9D9"} />
+          tabBarIcon: ({ focused }) => (
+            <HomeIcon
+              width={30}
+              height={30}
+              fill={focused ? "#F6F9FF" : "#A9A9A9"}
+            />
           ),
         }}
       />
@@ -37,8 +41,12 @@ export default function Tabs() {
         name="SearchTab"
         component={SearchScreen}
         options={{
-          tabBarIcon: () => (
-            <SearchIcon width={30} height={30} fill={"#C7C9D9"} />
+          tabBarIcon: ({ focused }) => (
+            <SearchIcon
+              width={30}
+              height={30}
+              fill={focused ? "#F6F9FF" : "#A9A9A9"}
+            />
           ),
         }}
       />
@@ -48,7 +56,11 @@ export default function Tabs() {
         options={{
           tabBarIcon: ({ focused }) => (
             <View>
-              <HeartIcon width={25} height={25} fill={"#C7C9D9"} />
+              <HeartIcon
+                width={25}
+                height={25}
+                fill={focused ? "#F6F9FF" : "#A9A9A9"}
+              />
             </View>
           ),
         }}
@@ -57,8 +69,12 @@ export default function Tabs() {
         name="ProfileTab"
         component={ProfileScreen}
         options={{
-          tabBarIcon: () => (
-            <UserIcon width={25} height={25} fill={"#C7C9D9"} />
+          tabBarIcon: ({ focused }) => (
+            <UserIcon
+              width={25}
+              height={25}
+              fill={focused ? "#F6F9FF" : "#A9A9A9"}
+            />
           ),
         }}
       />
