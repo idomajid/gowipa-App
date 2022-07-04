@@ -1,7 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import React from "react";
 
 export default function HomeScreen() {
+  const dimensions = Dimensions.get("window").width;
+
+  console.log(dimensions);
   return (
     <View style={styles.container}>
       <Text>HomeScreen</Text>
