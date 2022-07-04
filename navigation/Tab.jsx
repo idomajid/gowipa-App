@@ -1,9 +1,13 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Image } from "react-native";
+
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
 import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
 import WishListScreen from "../screens/WishListScreen";
 import ProfileScreen from "../screens/ProfileScreen";
+import ItemScreen from "../screens/items/itemScreen";
 
 import HeartIcon from "../assets/tabIcons/heart.svg";
 import HomeIcon from "../assets/tabIcons/home.svg";
@@ -11,6 +15,24 @@ import SearchIcon from "../assets/tabIcons/search.svg";
 import UserIcon from "../assets/tabIcons/user.svg";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
+
+const MyHomeTabScreen = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Items"
+        component={ItemScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 export default function Tabs() {
   return (
@@ -26,7 +48,7 @@ export default function Tabs() {
     >
       <Tab.Screen
         name="HomeTab"
-        component={HomeScreen}
+        component={MyHomeTabScreen}
         options={{
           tabBarIcon: ({ focused }) => (
             <HomeIcon
