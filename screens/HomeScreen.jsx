@@ -46,6 +46,7 @@ export default function HomeScreen({ navigation }) {
       </View>
       <View style={{ margin: 10, flexDirection: "row" }}>
         <ProductCard
+          imageProduct={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
           title="Nike"
           description="Nike Phoenix has a kobe autograph"
           price={`$${600}`}
