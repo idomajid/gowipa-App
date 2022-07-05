@@ -8,6 +8,7 @@ import {
 } from "react-native";
 import { useState } from "react";
 import Carousel from "react-native-reanimated-carousel";
+import ProductCard from "../components/productCard";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -43,13 +44,25 @@ export default function HomeScreen({ navigation }) {
           )}
         />
       </View>
+      <View style={{ margin: 10, flexDirection: "row" }}>
+        <ProductCard
+          title="Nike"
+          description="Nike Phoenix has a kobe autograph"
+          price={`$${600}`}
+        />
+        <ProductCard
+          title="Nike"
+          description="Nike Phoenix has a kobe autograph"
+          price={`$${600}`}
+        />
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#fff",
+    backgroundColor: "#ffff",
     width: windowWidth,
   },
   navbar: {
