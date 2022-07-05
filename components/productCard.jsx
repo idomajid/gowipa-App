@@ -6,10 +6,7 @@ export default function productCard(props) {
   return (
     <View style={styles.container}>
       <View>
-        <Image
-          style={styles.productImage}
-          source={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
-        />
+        <Image style={styles.productImage} source={props.imageProduct} />
       </View>
       <View style={styles.textDescriptionContainer}>
         <Text style={styles.titleProduct}>{props.title}</Text>
