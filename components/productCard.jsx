@@ -6,7 +6,7 @@ export default function productCard(props) {
   return (
     <View style={styles.container}>
       <View>
-        <Image style={styles.productImage} source={props.imageProduct} />
+        <Image source={props.productImage} style={styles.productImage} />
       </View>
       <View style={styles.textDescriptionContainer}>
         <Text style={styles.titleProduct}>{props.title}</Text>
@@ -54,12 +54,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     lineHeight: 16,
     paddingVertical: 4,
+    color: "#404040",
   },
   desProduct: {
     fontFamily: "Josefin-Sans-Light",
     fontSize: 14,
     lineHeight: 14,
     paddingVertical: 4,
+    color: "#404040",
   },
   priceProduct: {
     fontFamily: "Josefin-Sans-Regular",
