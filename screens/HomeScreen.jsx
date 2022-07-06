@@ -50,8 +50,17 @@ export default function HomeScreen({ navigation }) {
       <View style={{ marginTop: 10, marginHorizontal: 10 }}>
         <Text style={styles.HotItemTitle}>Hot Items</Text>
       </View>
-      <View style={{ margin: 10, flexDirection: "row" }}>
+      <View
+        style={{
+          marginVertical: 10,
+          flexDirection: "row",
+          alignItems: "flex-start",
+
+          width: windowWidth.width,
+        }}
+      >
         <FlatList
+          horizontal
           data={DummyData}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => {
@@ -104,6 +113,7 @@ const styles = StyleSheet.create({
   },
   HotItemTitle: {
     fontFamily: "Josefin-Sans-Regular",
+    marginVertical: 5,
     fontSize: 14,
     lineHeight: 14,
     color: "#404040",
