@@ -2,9 +2,10 @@ import { View, Text, Image, StyleSheet } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import MaskedView from "@react-native-masked-view/masked-view";
 
-export default function productCard(props) {
+export default function ProductHotItemCard(props) {
+  const { containerStyle } = props;
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { containerStyle }]}>
       <View>
         <Image source={props.productImage} style={styles.productImage} />
       </View>
@@ -43,10 +44,12 @@ const styles = StyleSheet.create({
     width: 129,
     flexDirection: "column",
     justifyContent: "space-between",
+    marginHorizontal: 8,
   },
   productImage: {
     width: 129,
     height: 136,
+    borderRadius: 2,
   },
 
   titleProduct: {
