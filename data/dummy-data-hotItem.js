@@ -17,9 +17,8 @@ module.exports = [
   },
   {
     id: "003",
-    title: "Random Shoes",
-    desConclution:
-      "Shoes mystery box, We will give you a random good quality shoes",
+    title: "Shoes mystery box",
+    desConclution: " We will give you a random good quality shoes",
     description: "",
     price: 40,
     photo: require("../assets/images/sportApp/whiteDomPinkShoes.jpg"),
