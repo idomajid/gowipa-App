@@ -6,10 +6,14 @@ import {
   Image,
   TouchableOpacity,
   FlatList,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 import Carousel from "react-native-reanimated-carousel";
-import ProductCard from "../components/productCard";
+import ProductHotItemCard from "../components/productHotItemCard";
+import ProductHomeCard from "../components/productHomeCard";
 
 import DummyData from "../data/dummy-data-hotItem";
 
@@ -24,71 +28,86 @@ export default function HomeScreen({ navigation }) {
   ]);
   console.log(DummyData);
   return (
-    <View style={styles.container}>
-      <View style={styles.navbar}>
-        <View>
-          <Text>Gowipa</Text>
+    <ScrollView>
+      <View style={styles.container}>
+        <View style={styles.navbar}>
+          <View>
+            <Text>Gowipa</Text>
+          </View>
+          <TouchableOpacity>
+            <Text>Click me</Text>
+          </TouchableOpacity>
         </View>
-        <TouchableOpacity>
-          <Text>Click me</Text>
-        </TouchableOpacity>
-      </View>
 
-      <View>
-        <Carousel
-          autoPlay={true}
-          autoPlayInterval={2000}
-          scrollAnimationDuration={3000}
-          width={windowWidth}
-          height={windowHeight / 3.2}
-          data={images}
-          renderItem={({ item, index }) => (
-            <Image style={styles.imageJumbotron} source={item} key={index} />
-          )}
-        />
+        <View>
+          <Carousel
+            autoPlay={true}
+            autoPlayInterval={2000}
+            scrollAnimationDuration={3000}
+            width={windowWidth}
+            height={windowHeight / 3.2}
+            data={images}
+            renderItem={({ item, index }) => (
+              <Image style={styles.imageJumbotron} source={item} key={index} />
+            )}
+          />
+        </View>
+        <View style={{ marginTop: 10, marginHorizontal: 10 }}>
+          <Text style={styles.HotItemTitle}>Hot Items</Text>
+        </View>
+        <View style={styles.HotItemLayout}>
+          <FlatList
+            horizontal
+            data={DummyData}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              console.log(item.photo);
+              return (
+                <Pressable>
+                  <ProductHotItemCard
+                    productImage={item.photo}
+                    title={item.title}
+                    description={item.desConclution}
+                    price={`$${item.price}`}
+                  />
+                </Pressable>
+              );
+            }}
+          />
+        </View>
+        <View>
+          <View style={styles.TitleQuoteLayer}>
+            <Text style={styles.TitleQuote}>Some Quote</Text>
+          </View>
+          <View style={styles.QuoteLayer}>
+            <View style={styles.QuoteLayout}>
+              <Text style={styles.QuoteText}>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Mollitia dolore sit, corrupti tempora quidem vitae cupiditate
+                minima alias necessitatibus voluptate!
+              </Text>
+              <Text style={styles.PersonQuote}> - J. Robert Oppenheimer</Text>
+            </View>
+          </View>
+        </View>
+        <View>
+          <View style={styles.ProductListLayer}>
+            <ProductHomeCard
+              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
+              title="dqdqwdqwdqw"
+              description="{item.desConclution}"
+              price="{`$${item.price}`}"
+            />
+            <ProductHomeCard
+              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
+              title="dqdqwdqwdqw"
+              description="{item.desConclution}"
+              price="{`$${item.price}`}"
+            />
+          </View>
+        </View>
       </View>
-      <View style={{ marginTop: 10, marginHorizontal: 10 }}>
-        <Text style={styles.HotItemTitle}>Hot Items</Text>
-      </View>
-      <View
-        style={{
-          marginVertical: 10,
-          flexDirection: "row",
-          alignItems: "flex-start",
-
-          width: windowWidth.width,
-        }}
-      >
-        <FlatList
-          horizontal
-          data={DummyData}
-          keyExtractor={(item) => item.id}
-          renderItem={({ item }) => {
-            console.log(item.photo);
-            return (
-              <ProductCard
-                productImage={item.photo}
-                title={item.title}
-                description={item.desConclution}
-                price={`$${item.price}`}
-              />
-            );
-          }}
-        />
-        {/* <ProductCard
-          imageProduct={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
-          title="Nike"
-          description="Nike Phoenix has a kobe autograph"
-          price={`$${600}`}
-        />
-        <ProductCard
-          imageProduct={require("../assets/images/sportApp/redVans.jpg")}
-          title="Nike"
-          description="Nike Phoenix has a kobe autograph"
-          price={`$${600}`}
-        /> */}
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
@@ -96,7 +115,6 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#ffff",
     width: windowWidth,
-    height: windowHeight - 60,
   },
   navbar: {
     width: windowWidth,
@@ -112,10 +130,56 @@ const styles = StyleSheet.create({
     height: windowHeight / 3.2,
   },
   HotItemTitle: {
-    fontFamily: "Josefin-Sans-Regular",
-    marginVertical: 5,
+    fontFamily: "Josefin-Sans-Bold",
+    marginVertical: 2,
     fontSize: 14,
     lineHeight: 14,
     color: "#404040",
+  },
+  HotItemLayout: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    width: windowWidth.width,
+  },
+  TitleQuoteLayer: {
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  TitleQuote: {
+    fontFamily: "Josefin-Sans-Regular",
+    fontSize: 16,
+    lineHeight: 16,
+    marginVertical: 10,
+  },
+  QuoteLayer: {
+    width: windowWidth,
+    height: windowHeight / 4,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#0D1821",
+  },
+  QuoteLayout: {
+    margin: 40,
+  },
+  QuoteText: {
+    fontFamily: "Josefin-Sans-Regular",
+    fontSize: 14,
+    lineHeight: 14,
+
+    color: "#F3F4F8",
+  },
+  PersonQuote: {
+    fontFamily: "Josefin-Sans-Regular",
+    fontSize: 14,
+    lineHeight: 14,
+    marginTop: 10,
+    color: "#F3F4F8",
+  },
+  ProductListLayer: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "flex-start",
+    width: windowWidth.width,
   },
 });
