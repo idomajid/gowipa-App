@@ -7,15 +7,18 @@ import {
   TouchableOpacity,
   FlatList,
   Pressable,
-  SafeAreaView,
   ScrollView,
+  ActivityIndicator,
 } from "react-native";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Carousel from "react-native-reanimated-carousel";
 import ProductHotItemCard from "../components/productHotItemCard";
 import ProductHomeCard from "../components/productHomeCard";
+import axios from "axios";
+import Apploading from "expo-app-loading";
 
 import DummyData from "../data/dummy-data-hotItem";
+import AppLoading from "expo-app-loading";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -26,7 +29,37 @@ export default function HomeScreen({ navigation }) {
     require("../assets/images/jumtron/jumbotron.jpg"),
     require("../assets/images/jumtron/jumbotron.jpg"),
   ]);
-  console.log(DummyData);
+  const [quote, setQuote] = useState("");
+
+  const quoteFetch = useCallback(async () => {
+    let response = await axios.get("https://api.quotable.io/random");
+    if (!response.data) {
+      <Apploading />;
+    }
+    setQuote(response.data);
+  }, []);
+
+  useEffect(() => {
+    quoteFetch();
+  }, [quoteFetch]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get("https://type.fit/api/quotes")
+  //     .then(function (response) {
+  //       // handle success
+  //       setQuote(response.data);
+  //     })
+  //     .catch(function (error) {
+  //       // handle error
+  //       console.log(error);
+  //     });
+  // }, []);
+
+  if (!quote) {
+    <AppLoading />;
+  }
+
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -61,7 +94,6 @@ export default function HomeScreen({ navigation }) {
             data={DummyData}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
-              console.log(item.photo);
               return (
                 <Pressable>
                   <ProductHotItemCard
@@ -81,16 +113,15 @@ export default function HomeScreen({ navigation }) {
           </View>
           <View style={styles.QuoteLayer}>
             <View style={styles.QuoteLayout}>
-              <Text style={styles.QuoteText}>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Mollitia dolore sit, corrupti tempora quidem vitae cupiditate
-                minima alias necessitatibus voluptate!
-              </Text>
-              <Text style={styles.PersonQuote}> - J. Robert Oppenheimer</Text>
+              <Text style={styles.QuoteText}>{quote.content}</Text>
+              <Text style={styles.PersonQuote}> - {quote.author}</Text>
             </View>
           </View>
         </View>
         <View>
+          <View style={{ marginTop: 10, marginHorizontal: 10 }}>
+            <Text style={styles.AllItemsTitle}>All Items</Text>
+          </View>
           <View style={styles.ProductListLayer}>
             <ProductHomeCard
               productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
@@ -131,7 +162,7 @@ const styles = StyleSheet.create({
   },
   HotItemTitle: {
     fontFamily: "Josefin-Sans-Bold",
-    marginVertical: 2,
+    marginTop: 10,
     fontSize: 14,
     lineHeight: 14,
     color: "#404040",
@@ -170,7 +201,7 @@ const styles = StyleSheet.create({
     color: "#F3F4F8",
   },
   PersonQuote: {
-    fontFamily: "Josefin-Sans-Regular",
+    fontFamily: "Josefin-Sans-Light",
     fontSize: 14,
     lineHeight: 14,
     marginTop: 10,
@@ -181,5 +212,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "flex-start",
     width: windowWidth.width,
+  },
+  AllItemsTitle: {
+    fontFamily: "Josefin-Sans-Bold",
+    marginTop: 10,
+    fontSize: 14,
+    lineHeight: 14,
+    color: "#404040",
   },
 });
