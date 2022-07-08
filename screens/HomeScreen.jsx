@@ -26,7 +26,7 @@ const windowHeight = Dimensions.get("window").height;
 export default function HomeScreen({ navigation }) {
   const [images, setImages] = useState([
     require("../assets/images/jumtron/jumbotron.jpg"),
-    require("../assets/images/jumtron/jumbotron.jpg"),
+    require("../assets/images/jumtron/jumbotron_2.jpg"),
     require("../assets/images/jumtron/jumbotron.jpg"),
   ]);
   const [quote, setQuote] = useState("");
