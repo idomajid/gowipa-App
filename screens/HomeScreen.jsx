@@ -8,28 +8,27 @@ import {
   FlatList,
   Pressable,
   ScrollView,
-  ActivityIndicator,
 } from "react-native";
 import { useState, useEffect, useCallback } from "react";
+import axios from "axios";
+import Apploading from "expo-app-loading";
+import AppLoading from "expo-app-loading";
 import Carousel from "react-native-reanimated-carousel";
 import ProductHotItemCard from "../components/productHotItemCard";
 import ProductHomeCard from "../components/productHomeCard";
-import axios from "axios";
-import Apploading from "expo-app-loading";
 
 import DummyData from "../data/dummy-data-hotItem";
-import AppLoading from "expo-app-loading";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function HomeScreen({ navigation }) {
+  const [quote, setQuote] = useState("");
   const [images, setImages] = useState([
     require("../assets/images/jumtron/jumbotron.jpg"),
     require("../assets/images/jumtron/jumbotron_2.jpg"),
     require("../assets/images/jumtron/jumbotron.jpg"),
   ]);
-  const [quote, setQuote] = useState("");
 
   const quoteFetch = useCallback(async () => {
     let response = await axios.get("https://api.quotable.io/random");
@@ -42,19 +41,6 @@ export default function HomeScreen({ navigation }) {
   useEffect(() => {
     quoteFetch();
   }, [quoteFetch]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get("https://type.fit/api/quotes")
-  //     .then(function (response) {
-  //       // handle success
-  //       setQuote(response.data);
-  //     })
-  //     .catch(function (error) {
-  //       // handle error
-  //       console.log(error);
-  //     });
-  // }, []);
 
   if (!quote) {
     <AppLoading />;
@@ -95,7 +81,7 @@ export default function HomeScreen({ navigation }) {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               return (
-                <Pressable>
+                <Pressable onPress={() => console.log(item.id)}>
                   <ProductHotItemCard
                     productImage={item.photo}
                     title={item.title}
@@ -119,23 +105,58 @@ export default function HomeScreen({ navigation }) {
           </View>
         </View>
         <View>
-          <View style={{ marginTop: 10, marginHorizontal: 10 }}>
+          <View style={{ marginHorizontal: 10 }}>
             <Text style={styles.AllItemsTitle}>All Items</Text>
           </View>
+
           <View style={styles.ProductListLayer}>
-            <ProductHomeCard
-              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
-              title="dqdqwdqwdqw"
-              description="{item.desConclution}"
-              price="{`$${item.price}`}"
-            />
-            <ProductHomeCard
-              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
-              title="dqdqwdqwdqw"
-              description="{item.desConclution}"
-              price="{`$${item.price}`}"
-            />
+            {DummyData.map((item) => {
+              return (
+                <Pressable onPress={() => console.log(item.id)}>
+                  <ProductHomeCard
+                    productImage={item.photo}
+                    title={item.title}
+                    description={item.desConclution}
+                    price={`$${item.price}`}
+                  />
+                </Pressable>
+              );
+            })}
           </View>
+
+          {/* <FlatList
+            data={DummyData}
+            numColumns={2}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <Pressable onPress={() => console.log(item.id)}>
+                  <View style={styles.ProductListLayer}>
+                    <ProductHomeCard
+                      productImage={item.photo}
+                      title={item.title}
+                      description={item.desConclution}
+                      price={`$${item.price}`}
+                    />
+                  </View>
+                </Pressable>
+              );
+            }}
+          /> */}
+
+          {/* <ProductHomeCard
+              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
+              title="dqdqwdqwdqw"
+              description="{item.desConclution}"
+              price="{`$${item.price}`}"
+            />
+
+            <ProductHomeCard
+              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
+              title="dqdqwdqwdqw"
+              description="{item.desConclution}"
+              price="{`$${item.price}`}"
+            /> */}
         </View>
       </View>
     </ScrollView>
@@ -170,8 +191,7 @@ const styles = StyleSheet.create({
   HotItemLayout: {
     marginTop: 10,
     flexDirection: "row",
-    alignItems: "flex-start",
-    width: windowWidth.width,
+    alignItems: "center",
   },
   TitleQuoteLayer: {
     alignItems: "center",
@@ -209,9 +229,8 @@ const styles = StyleSheet.create({
   },
   ProductListLayer: {
     marginTop: 10,
+    flexWrap: "wrap",
     flexDirection: "row",
-    alignItems: "flex-start",
-    width: windowWidth.width,
   },
   AllItemsTitle: {
     fontFamily: "Josefin-Sans-Bold",
