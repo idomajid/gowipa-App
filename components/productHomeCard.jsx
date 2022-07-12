@@ -7,7 +7,7 @@ const windowWidth = Dimensions.get("window").width;
 export default function ProductHotItemCard(props) {
   const { containerStyle } = props;
   return (
-    <View style={[styles.container, { containerStyle }]}>
+    <View style={[styles.container]}>
       <View>
         <Image source={props.productImage} style={styles.productImage} />
       </View>
@@ -43,35 +43,42 @@ export default function ProductHotItemCard(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: "45%",
-    flexDirection: "column",
+    width: windowWidth / 2.3,
     marginHorizontal: 10,
-    justifyContent: "space-between",
   },
   productImage: {
     width: "100%",
+
     height: 172,
     borderRadius: 2,
   },
 
   titleProduct: {
     fontFamily: "Josefin-Sans-Regular",
-    fontSize: 20,
-    lineHeight: 20,
-    paddingVertical: 4,
+    fontSize: 16,
+    lineHeight: 16,
+    paddingTop: 15,
+    paddingBottom: 4,
     color: "#404040",
   },
   desProduct: {
     fontFamily: "Josefin-Sans-Light",
-    fontSize: 18,
-    lineHeight: 18,
-    paddingVertical: 4,
+    fontSize: 14,
+    lineHeight: 14,
+    paddingTop: 4,
+    paddingBottom: 4,
+
     color: "#404040",
   },
   priceProduct: {
     fontFamily: "Josefin-Sans-Regular",
-    fontSize: 18,
-    lineHeight: 18,
-    paddingVertical: 4,
+    fontSize: 14,
+    lineHeight: 14,
+    paddingTop: 8,
+    paddingBottom: 4,
+  },
+  textDescriptionContainer: {
+    // width: "200%",
+    with: "100%",
   },
 });
