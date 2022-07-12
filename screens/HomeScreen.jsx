@@ -231,6 +231,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexWrap: "wrap",
     flexDirection: "row",
+    justifyContent: "space-between",
   },
   AllItemsTitle: {
     fontFamily: "Josefin-Sans-Bold",
