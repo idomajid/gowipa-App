@@ -123,40 +123,6 @@ export default function HomeScreen({ navigation }) {
               );
             })}
           </View>
-
-          {/* <FlatList
-            data={DummyData}
-            numColumns={2}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
-              return (
-                <Pressable onPress={() => console.log(item.id)}>
-                  <View style={styles.ProductListLayer}>
-                    <ProductHomeCard
-                      productImage={item.photo}
-                      title={item.title}
-                      description={item.desConclution}
-                      price={`$${item.price}`}
-                    />
-                  </View>
-                </Pressable>
-              );
-            }}
-          /> */}
-
-          {/* <ProductHomeCard
-              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
-              title="dqdqwdqwdqw"
-              description="{item.desConclution}"
-              price="{`$${item.price}`}"
-            />
-
-            <ProductHomeCard
-              productImage={require("../assets/images/sportApp/whiteDomPinkShoes.jpg")}
-              title="dqdqwdqwdqw"
-              description="{item.desConclution}"
-              price="{`$${item.price}`}"
-            /> */}
         </View>
       </View>
     </ScrollView>
@@ -184,8 +150,8 @@ const styles = StyleSheet.create({
   HotItemTitle: {
     fontFamily: "Josefin-Sans-Bold",
     marginTop: 10,
-    fontSize: 14,
-    lineHeight: 14,
+    fontSize: 18,
+    lineHeight: 18,
     color: "#404040",
   },
   HotItemLayout: {
@@ -232,12 +198,13 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     flexDirection: "row",
     justifyContent: "space-between",
+    marginBottom: 100,
   },
   AllItemsTitle: {
     fontFamily: "Josefin-Sans-Bold",
-    marginTop: 10,
-    fontSize: 14,
-    lineHeight: 14,
+    marginTop: 20,
+    fontSize: 18,
+    lineHeight: 18,
     color: "#404040",
   },
 });
