@@ -81,7 +81,14 @@ export default function HomeScreen({ navigation }) {
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               return (
-                <Pressable onPress={() => console.log(item.id)}>
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("Items", {
+                      title: item.title,
+                      id: item.id,
+                    })
+                  }
+                >
                   <ProductHotItemCard
                     productImage={item.photo}
                     title={item.title}
@@ -112,7 +119,15 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.ProductListLayer}>
             {DummyData.map((item) => {
               return (
-                <Pressable key={item.id} onPress={() => console.log(item.id)}>
+                <Pressable
+                  key={item.id}
+                  onPress={() =>
+                    navigation.navigate("Items", {
+                      title: item.title,
+                      id: item.id,
+                    })
+                  }
+                >
                   <ProductHomeCard
                     productImage={item.photo}
                     title={item.title}

@@ -1,12 +1,21 @@
-import { View, Text } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const Items = () => {
+export default function SearchScreen({ navigation, route }) {
+  console.log({ route });
   return (
-    <View>
-      <Text>itemsCreen</Text>
+    <View style={styles.container}>
+      <Text>ItemScreen</Text>
+      <Text>{route.params?.title}</Text>
     </View>
   );
-};
+}
 
-export default Items;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+});
