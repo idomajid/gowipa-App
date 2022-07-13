@@ -112,7 +112,7 @@ export default function HomeScreen({ navigation }) {
           <View style={styles.ProductListLayer}>
             {DummyData.map((item) => {
               return (
-                <Pressable onPress={() => console.log(item.id)}>
+                <Pressable key={item.id} onPress={() => console.log(item.id)}>
                   <ProductHomeCard
                     productImage={item.photo}
                     title={item.title}
