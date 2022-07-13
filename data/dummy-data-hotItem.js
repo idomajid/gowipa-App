@@ -26,10 +26,10 @@ module.exports = [
 
   {
     id: "004",
-    title: "Second Item",
-    desConclution: "lorem imsum emet dalang kudul",
+    title: "Elevania Sneakers",
+    desConclution: "affordble high quality shoes.",
     description: "",
-    price: 0,
-    photo: require("../assets/images/sportApp/redVans.jpg"),
+    price: 30,
+    photo: require("../assets/images/sportApp/pair-of-shoes.jpg"),
   },
 ];
