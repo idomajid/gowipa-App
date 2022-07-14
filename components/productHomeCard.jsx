@@ -1,11 +1,9 @@
 import { View, Text, Image, StyleSheet, Dimensions } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import MaskedView from "@react-native-masked-view/masked-view";
+import GradientText from "./gradientText";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function ProductHotItemCard(props) {
-  const { containerStyle } = props;
   return (
     <View style={[styles.container]}>
       <View>
@@ -14,29 +12,10 @@ export default function ProductHotItemCard(props) {
       <View style={styles.textDescriptionContainer}>
         <Text style={styles.titleProduct}>{props.title}</Text>
         <Text style={styles.desProduct}>{props.description}</Text>
-
-        <MaskedView
-          maskElement={
-            <Text
-              style={[styles.priceProduct, { backgroundColor: "transparent" }]}
-            >
-              {props.price}
-            </Text>
-          }
-        >
-          <LinearGradient
-            colors={["#E28075", "#F06483"]}
-            start={{ x: 1, y: 1 }}
-            end={{ x: 0, y: 0.33 }}
-          >
-            <Text style={[styles.priceProduct, { opacity: 0 }]}>
-              {props.price}
-            </Text>
-          </LinearGradient>
-        </MaskedView>
+        <GradientText styleFont={styles.priceProduct}>
+          {props.price}
+        </GradientText>
       </View>
-      <View></View>
-      <View></View>
     </View>
   );
 }
