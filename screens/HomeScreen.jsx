@@ -86,6 +86,9 @@ export default function HomeScreen({ navigation }) {
                     navigation.navigate("Items", {
                       title: item.title,
                       id: item.id,
+                      price: item.price,
+                      description: item.description,
+                      photo: item.photo,
                     })
                   }
                 >
@@ -125,6 +128,8 @@ export default function HomeScreen({ navigation }) {
                     navigation.navigate("Items", {
                       title: item.title,
                       id: item.id,
+                      price: item.price,
+                      description: item.description,
                     })
                   }
                 >
