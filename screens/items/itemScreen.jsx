@@ -80,7 +80,7 @@ export default function SearchScreen({ navigation, route }) {
               numberOfLines={textShown ? undefined : 4}
               style={[{ lineHeight: 21 }]}
             >
-              <Text style={styles.descriptioText}>
+              <Text style={styles.descriptionText}>
                 {route.params?.description}
               </Text>
             </Text>
@@ -153,12 +153,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 14,
     color: "#404040",
+    marginHorizontal: 100,
   },
-  descriptioText: {
+  descriptionText: {
     fontFamily: "Josefin-Sans-Light",
     fontSize: 14,
-    lineHeight: 14,
+    lineHeight: 21,
     color: "#404040",
-    marginTop: 10,
   },
 });
