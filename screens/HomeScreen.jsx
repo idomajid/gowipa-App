@@ -17,7 +17,7 @@ import Carousel from "react-native-reanimated-carousel";
 import ProductHotItemCard from "../components/productHotItemCard";
 import ProductHomeCard from "../components/productHomeCard";
 
-import DummyData from "../data/dummy-data-hotItem";
+import DummyData from "../data/dummy-data";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
