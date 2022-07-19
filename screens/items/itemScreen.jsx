@@ -6,30 +6,32 @@ import {
   Dimensions,
   Image,
   ScrollView,
+  FlatList,
+  Pressable,
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 
+import DummyData from "../../data/dummy-data";
 import GradientText from "../../components/gradientText";
+import ProductHotItemCard from "../../components/productHotItemCard";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 export default function SearchScreen({ navigation, route }) {
+  const [textShown, setTextShown] = useState(false);
+  const [lengthMore, setLengthMore] = useState(false);
   const [images, setImages] = useState([
     require("../../assets/images/jumtron/jumbotron.jpg"),
     require("../../assets/images/jumtron/jumbotron_2.jpg"),
     require("../../assets/images/jumtron/jumbotron.jpg"),
   ]);
-  const [textShown, setTextShown] = useState(false); //To show ur remaining Text
-  const [lengthMore, setLengthMore] = useState(false); //to show the "Read more & Less Line"
 
   const toggleNumberOfLines = () => {
-    //To toggle the show text or hide it
     setTextShown(!textShown);
   };
 
   const onTextLayout = useCallback((e) => {
-    setLengthMore(e.nativeEvent.lines.length >= 4); //to check the text is more than 4 lines or not
-    // console.log(e.nativeEvent);
+    setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
   //console.log({ route });
@@ -74,7 +76,7 @@ export default function SearchScreen({ navigation, route }) {
           <View style={{ alignItems: "center" }}>
             <Text style={styles.descriptionLabel}>Description</Text>
           </View>
-          <View style={{ margin: 10 }}>
+          <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
             <Text
               onTextLayout={onTextLayout}
               numberOfLines={textShown ? undefined : 4}
@@ -88,16 +90,51 @@ export default function SearchScreen({ navigation, route }) {
             {lengthMore ? (
               <Text
                 onPress={toggleNumberOfLines}
-                style={{ lineHeight: 21, marginTop: 10 }}
+                style={{
+                  lineHeight: 21,
+                  marginTop: 10,
+
+                  fontFamily: "Josefin-Sans-Regular",
+                  color: "#404040",
+                }}
               >
                 {textShown ? "Read less..." : "Read more..."}
               </Text>
             ) : null}
-
-            <View></View>
           </View>
         </View>
-        {/* <View>random stuff </View> */}
+        <View style={{ marginTop: 10, marginHorizontal: 20 }}>
+          <Text style={styles.RecommendationTitle}>Our Recomendation</Text>
+        </View>
+        <View style={styles.RecommendationLayout}>
+          <FlatList
+            horizontal
+            data={DummyData}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("Items", {
+                      title: item.title,
+                      id: item.id,
+                      price: item.price,
+                      description: item.description,
+                      photo: item.photo,
+                    })
+                  }
+                >
+                  <ProductHotItemCard
+                    productImage={item.photo}
+                    title={item.title}
+                    description={item.desConclution}
+                    price={`$${item.price}`}
+                  />
+                </Pressable>
+              );
+            }}
+          />
+        </View>
       </View>
     </ScrollView>
   );
@@ -153,12 +190,26 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 14,
     color: "#404040",
-    marginHorizontal: 100,
+
+    marginHorizontal: 10,
   },
   descriptionText: {
     fontFamily: "Josefin-Sans-Light",
     fontSize: 14,
     lineHeight: 21,
+    color: "#404040",
+  },
+  RecommendationLayout: {
+    marginTop: 10,
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  RecommendationTitle: {
+    fontFamily: "Josefin-Sans-Regular",
+    fontSize: 14,
+    lineHeight: 14,
+    marginTop: 10,
+
     color: "#404040",
   },
 });
