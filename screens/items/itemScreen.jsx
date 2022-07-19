@@ -17,7 +17,8 @@ import ProductHotItemCard from "../../components/productHotItemCard";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-export default function SearchScreen({ navigation, route }) {
+
+export default function ItemScreen({ navigation, route }) {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const [images, setImages] = useState([
