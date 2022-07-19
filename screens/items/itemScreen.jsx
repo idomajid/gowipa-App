@@ -65,7 +65,7 @@ export default function SearchScreen({ navigation, route }) {
             </View>
             <View style={styles.priceLayout}>
               <GradientText styleFont={styles.priceProduct}>
-                {route.params?.price}
+                {`$ ${route.params?.price}`}
               </GradientText>
             </View>
             {/* <View>for a quantity component</View> */}
@@ -134,6 +134,57 @@ export default function SearchScreen({ navigation, route }) {
               );
             }}
           />
+        </View>
+        <View style={{ marginVertical: 30 }}>
+          <Pressable onPress={() => console.log("worked buy Now")}>
+            <View
+              style={{
+                paddingVertical: 20,
+                marginHorizontal: 20,
+                borderRadius: 2,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#000",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#ffff",
+                  fontFamily: "Josefin-Sans-Regular",
+                  fontSize: 18,
+                  lineHeight: 18,
+                }}
+              >
+                Buy now
+              </Text>
+            </View>
+          </Pressable>
+          <Pressable onPress={() => console.log("worked Add to cart")}>
+            <View
+              style={{
+                paddingVertical: 18,
+                marginHorizontal: 20,
+                borderRadius: 2,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#fff",
+                borderWidth: 1,
+                borderColor: "#000",
+                marginTop: 20,
+              }}
+            >
+              <Text
+                style={{
+                  color: "#000",
+                  fontFamily: "Josefin-Sans-Regular",
+                  fontSize: 18,
+                  lineHeight: 18,
+                }}
+              >
+                Add to cart
+              </Text>
+            </View>
+          </Pressable>
         </View>
       </View>
     </ScrollView>
