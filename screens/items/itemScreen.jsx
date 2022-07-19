@@ -104,38 +104,6 @@ export default function ItemScreen({ navigation, route }) {
             ) : null}
           </View>
         </View>
-        <View style={{ marginTop: 10, marginHorizontal: 20 }}>
-          <Text style={styles.RecommendationTitle}>Our Recomendation</Text>
-        </View>
-        <View style={styles.RecommendationLayout}>
-          <FlatList
-            horizontal
-            data={DummyData}
-            keyExtractor={(item) => item.id}
-            renderItem={({ item }) => {
-              return (
-                <Pressable
-                  onPress={() =>
-                    navigation.navigate("Items", {
-                      title: item.title,
-                      id: item.id,
-                      price: item.price,
-                      description: item.description,
-                      photo: item.photo,
-                    })
-                  }
-                >
-                  <ProductHotItemCard
-                    productImage={item.photo}
-                    title={item.title}
-                    description={item.desConclution}
-                    price={`$${item.price}`}
-                  />
-                </Pressable>
-              );
-            }}
-          />
-        </View>
         <View style={{ marginVertical: 30 }}>
           <Pressable onPress={() => console.log("worked buy Now")}>
             <View
@@ -186,6 +154,38 @@ export default function ItemScreen({ navigation, route }) {
               </Text>
             </View>
           </Pressable>
+        </View>
+        <View style={{ marginHorizontal: 20 }}>
+          <Text style={styles.RecommendationTitle}>Our Recomendation</Text>
+        </View>
+        <View style={styles.RecommendationLayout}>
+          <FlatList
+            horizontal
+            data={DummyData}
+            keyExtractor={(item) => item.id}
+            renderItem={({ item }) => {
+              return (
+                <Pressable
+                  onPress={() =>
+                    navigation.navigate("Items", {
+                      title: item.title,
+                      id: item.id,
+                      price: item.price,
+                      description: item.description,
+                      photo: item.photo,
+                    })
+                  }
+                >
+                  <ProductHotItemCard
+                    productImage={item.photo}
+                    title={item.title}
+                    description={item.desConclution}
+                    price={`$${item.price}`}
+                  />
+                </Pressable>
+              );
+            }}
+          />
         </View>
       </View>
     </ScrollView>
@@ -255,6 +255,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     flexDirection: "row",
     alignItems: "center",
+    marginBottom: 50,
   },
   RecommendationTitle: {
     fontFamily: "Josefin-Sans-Regular",
