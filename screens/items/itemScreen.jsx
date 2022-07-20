@@ -14,6 +14,7 @@ import Carousel from "react-native-reanimated-carousel";
 import DummyData from "../../data/dummy-data";
 import GradientText from "../../components/gradientText";
 import ProductHotItemCard from "../../components/productHotItemCard";
+import NumberPick from "../../components/numberPick";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -55,21 +56,25 @@ export default function ItemScreen({ navigation, route }) {
           />
         </View>
         <View style={styles.titleAndPrizeLayer}>
-          <View>
-            <Text style={styles.titleProduct}>{route.params?.title}</Text>
-            <View style={styles.labelLayout}>
-              <Text style={styles.labelProduct}>New</Text>
-              <Text style={styles.labelProduct}> | </Text>
-              <Text style={styles.labelProduct}>Unisex</Text>
-              <Text style={styles.labelProduct}> | </Text>
-              <Text style={styles.labelProduct}>Available</Text>
+          <View
+            style={{ flexDirection: "row", justifyContent: "space-between" }}
+          >
+            <View>
+              <Text style={styles.titleProduct}>{route.params?.title}</Text>
+              <View style={styles.labelLayout}>
+                <Text style={styles.labelProduct}>New</Text>
+                <Text style={styles.labelProduct}> | </Text>
+                <Text style={styles.labelProduct}>Unisex</Text>
+                <Text style={styles.labelProduct}> | </Text>
+                <Text style={styles.labelProduct}>Available</Text>
+              </View>
+              <View style={styles.priceLayout}>
+                <GradientText styleFont={styles.priceProduct}>
+                  {`$ ${route.params?.price}`}
+                </GradientText>
+              </View>
             </View>
-            <View style={styles.priceLayout}>
-              <GradientText styleFont={styles.priceProduct}>
-                {`$ ${route.params?.price}`}
-              </GradientText>
-            </View>
-            {/* <View>for a quantity component</View> */}
+            <NumberPick title="Size" styleFont={{ color: "#000" }} />
           </View>
         </View>
         <View></View>
