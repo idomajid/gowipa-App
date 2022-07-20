@@ -9,7 +9,7 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Apploading from "expo-app-loading";
 import AppLoading from "expo-app-loading";
@@ -30,17 +30,17 @@ export default function HomeScreen({ navigation }) {
     require("../assets/images/jumtron/jumbotron.jpg"),
   ]);
 
-  const quoteFetch = useCallback(async () => {
+  const quoteFetch = async () => {
     let response = await axios.get("https://api.quotable.io/random");
     if (!response.data) {
       <Apploading />;
     }
     setQuote(response.data);
-  }, []);
+  };
 
   useEffect(() => {
     quoteFetch();
-  }, [quoteFetch]);
+  }, []);
 
   if (!quote) {
     <AppLoading />;
