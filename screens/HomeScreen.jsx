@@ -18,12 +18,14 @@ import ProductHotItemCard from "../components/productHotItemCard";
 import ProductHomeCard from "../components/productHomeCard";
 
 import DummyData from "../data/dummy-data";
+import { supabase } from "../supabase";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function HomeScreen({ navigation }) {
   const [quote, setQuote] = useState("");
+  const [dataSupabase, setDataSupabase] = useState();
   const [images, setImages] = useState([
     require("../assets/images/jumtron/jumbotron.jpg"),
     require("../assets/images/jumtron/jumbotron_2.jpg"),
@@ -46,6 +48,17 @@ export default function HomeScreen({ navigation }) {
     <AppLoading />;
   }
 
+  async function productFetch() {
+    let { data, error } = await supabase.from("products").select();
+    setDataSupabase(data);
+    return dataSupabase;
+  }
+
+  useEffect(() => {
+    productFetch();
+  }, []);
+
+  console.log({ dataSupabase });
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -77,7 +90,7 @@ export default function HomeScreen({ navigation }) {
         <View style={styles.HotItemLayout}>
           <FlatList
             horizontal
-            data={DummyData}
+            data={dataSupabase}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               return (
@@ -88,14 +101,14 @@ export default function HomeScreen({ navigation }) {
                       id: item.id,
                       price: item.price,
                       description: item.description,
-                      photo: item.photo,
+                      photo: item.imageUrl,
                     })
                   }
                 >
                   <ProductHotItemCard
-                    productImage={item.photo}
+                    productImage={{ uri: item.imageUrl }}
                     title={item.title}
-                    description={item.desConclution}
+                    description={item.desConclusion}
                     price={`$${item.price}`}
                   />
                 </Pressable>
@@ -120,7 +133,7 @@ export default function HomeScreen({ navigation }) {
           </View>
 
           <View style={styles.ProductListLayer}>
-            {DummyData.map((item) => {
+            {dataSupabase.map((item) => {
               return (
                 <Pressable
                   key={item.id}
@@ -134,9 +147,9 @@ export default function HomeScreen({ navigation }) {
                   }
                 >
                   <ProductHomeCard
-                    productImage={item.photo}
+                    productImage={{ uri: item.imageUrl }}
                     title={item.title}
-                    description={item.desConclution}
+                    description={item.desConclusion}
                     price={`$${item.price}`}
                   />
                 </Pressable>
