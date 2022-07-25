@@ -2,6 +2,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import Tab from "./navigation/Tab";
 import Apploading from "expo-app-loading";
+import "react-native-url-polyfill/auto";
 
 export default function App() {
   const [fontLoaded] = useFonts({
