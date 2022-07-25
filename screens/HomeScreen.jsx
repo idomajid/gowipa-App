@@ -9,7 +9,7 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Apploading from "expo-app-loading";
 import AppLoading from "expo-app-loading";
@@ -19,6 +19,7 @@ import ProductHomeCard from "../components/productHomeCard";
 
 import DummyData from "../data/dummy-data";
 import { supabase } from "../supabase";
+import { AffiliateContext } from "../stores/getDataSupabase";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -31,6 +32,9 @@ export default function HomeScreen({ navigation }) {
     require("../assets/images/jumtron/jumbotron_2.jpg"),
     require("../assets/images/jumtron/jumbotron.jpg"),
   ]);
+
+  const testing = useContext(AffiliateContext);
+  console.log({ testing });
 
   const quoteFetch = async () => {
     let response = await axios.get("https://api.quotable.io/random");
@@ -58,7 +62,7 @@ export default function HomeScreen({ navigation }) {
     productFetch();
   }, []);
 
-  console.log({ dataSupabase });
+  //console.log({ dataSupabase });
   return (
     <ScrollView>
       <View style={styles.container}>
@@ -133,28 +137,32 @@ export default function HomeScreen({ navigation }) {
           </View>
 
           <View style={styles.ProductListLayer}>
-            {dataSupabase.map((item) => {
-              return (
-                <Pressable
-                  key={item.id}
-                  onPress={() =>
-                    navigation.navigate("Items", {
-                      title: item.title,
-                      id: item.id,
-                      price: item.price,
-                      description: item.description,
-                    })
-                  }
-                >
-                  <ProductHomeCard
-                    productImage={{ uri: item.imageUrl }}
-                    title={item.title}
-                    description={item.desConclusion}
-                    price={`$${item.price}`}
-                  />
-                </Pressable>
-              );
-            })}
+            {dataSupabase == undefined ? (
+              <AppLoading />
+            ) : (
+              dataSupabase.map((item) => {
+                return (
+                  <Pressable
+                    key={item.id}
+                    onPress={() =>
+                      navigation.navigate("Items", {
+                        title: item.title,
+                        id: item.id,
+                        price: item.price,
+                        description: item.description,
+                      })
+                    }
+                  >
+                    <ProductHomeCard
+                      productImage={{ uri: item.imageUrl }}
+                      title={item.title}
+                      description={item.desConclusion}
+                      price={`$${item.price}`}
+                    />
+                  </Pressable>
+                );
+              })
+            )}
           </View>
         </View>
       </View>
