@@ -9,7 +9,7 @@ import {
   Pressable,
   ScrollView,
 } from "react-native";
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Apploading from "expo-app-loading";
 import AppLoading from "expo-app-loading";
