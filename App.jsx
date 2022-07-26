@@ -14,6 +14,7 @@ export default function App() {
   if (!fontLoaded) {
     return <Apploading />;
   }
+
   return (
     <NavigationContainer>
       <Tab />
