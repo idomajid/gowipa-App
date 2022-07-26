@@ -19,7 +19,6 @@ import ProductHomeCard from "../components/productHomeCard";
 
 import DummyData from "../data/dummy-data";
 import { supabase } from "../supabase";
-import { AffiliateContext } from "../stores/getDataSupabase";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -32,9 +31,6 @@ export default function HomeScreen({ navigation }) {
     require("../assets/images/jumtron/jumbotron_2.jpg"),
     require("../assets/images/jumtron/jumbotron.jpg"),
   ]);
-
-  const testing = useContext(AffiliateContext);
-  console.log({ testing });
 
   const quoteFetch = async () => {
     let response = await axios.get("https://api.quotable.io/random");
