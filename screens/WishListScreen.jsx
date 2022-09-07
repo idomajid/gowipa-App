@@ -1,10 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import WishlistCard from "../components/assetCards/reausableCard";
 
 export default function WishListScreen() {
   return (
     <View style={styles.container}>
-      <Text>WishListScreen</Text>
+      <WishlistCard />
     </View>
   );
 }
