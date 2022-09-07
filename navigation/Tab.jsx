@@ -56,7 +56,7 @@ const MyHomeTabScreen = ({ navigation }) => {
               </View>
             </Pressable>
           ),
-          headerRight: ({ focused }) => (
+          headerRight: () => (
             <Pressable
               // onHideUnderlay={() => setIsPress(false)}
               // onShowUnderlay={() => setIsPress(true)}
@@ -123,6 +123,8 @@ export default function Tabs() {
         name="WishListTab"
         component={WishListScreen}
         options={{
+          headerShown: true,
+          title: `My Wishlist`,
           tabBarIcon: ({ focused }) => (
             <View>
               <HeartIcon
