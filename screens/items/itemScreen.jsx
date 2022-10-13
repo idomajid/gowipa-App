@@ -1,4 +1,5 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useEffect } from "react";
+import { supabase } from "../../supabase";
 import {
   StyleSheet,
   Text,
@@ -11,6 +12,7 @@ import {
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 
+import HeartIcon from "../../assets/tabIcons/heart.svg";
 import DummyData from "../../data/dummy-data";
 import GradientText from "../../components/gradientText";
 import ProductHotItemCard from "../../components/productHotItemCard";
@@ -22,11 +24,28 @@ const windowHeight = Dimensions.get("window").height;
 export default function ItemScreen({ navigation, route }) {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
+  const [isPressed, setIsPressed] = useState(null);
   const [images, setImages] = useState([
     require("../../assets/images/jumtron/jumbotron.jpg"),
     require("../../assets/images/jumtron/jumbotron_2.jpg"),
     require("../../assets/images/jumtron/jumbotron.jpg"),
   ]);
+
+  useEffect(() => {
+    const FavoriteItems = async () => {
+      let { data: products, error } = await supabase
+        .from("products")
+        .select("isWishlist");
+
+      setIsPressed(products);
+    };
+
+    FavoriteItems();
+  }, []);
+
+  const hoverHearth = () => {
+    setIsPressed(!isPressed);
+  };
 
   const toggleNumberOfLines = () => {
     setTextShown(!textShown);
@@ -36,7 +55,7 @@ export default function ItemScreen({ navigation, route }) {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
-  //console.log({ route });
+  console.log({ isPressed });
 
   return (
     <ScrollView>
@@ -60,7 +79,25 @@ export default function ItemScreen({ navigation, route }) {
             style={{ flexDirection: "row", justifyContent: "space-between" }}
           >
             <View>
-              <Text style={styles.titleProduct}>{route.params?.title}</Text>
+              <View style={styles.titleAndFav}>
+                <View>
+                  <Text style={styles.titleProduct}>{route.params?.title}</Text>
+                </View>
+                <View style={{ paddingHorizontal: 10 }}>
+                  <Pressable
+                    // onHideUnderlay={() => setIsPress(false)}
+                    // onShowUnderlay={() => setIsPress(true)}
+                    onPress={hoverHearth}
+                  >
+                    <HeartIcon
+                      width={22}
+                      height={22}
+                      fill={isPressed ? "#E71D36" : "#A9A9A9"}
+                    />
+                  </Pressable>
+                </View>
+              </View>
+
               <View style={styles.labelLayout}>
                 <Text style={styles.labelProduct}>New</Text>
                 <Text style={styles.labelProduct}> | </Text>
@@ -207,6 +244,10 @@ const styles = StyleSheet.create({
     height: windowHeight / 3.2,
     marginTop: 20,
   },
+  titleAndFav: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+  },
   titleAndPrizeLayer: {
     marginTop: 15,
     marginHorizontal: 20,
@@ -229,6 +270,7 @@ const styles = StyleSheet.create({
   },
   priceLayout: {
     marginVertical: 5,
+    flexDirection: "row",
   },
   priceProduct: {
     fontFamily: "Josefin-Sans-Bold",
