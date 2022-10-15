@@ -32,16 +32,21 @@ export default function ItemScreen({ navigation, route }) {
     require("../../assets/images/jumtron/jumbotron.jpg"),
   ]);
 
+  const id = route.params?.id;
+
   useEffect(() => {
     const FavoriteItems = async () => {
       let { data: products, error } = await supabase
         .from("products")
-        .select("title")
-        .eq("id", route.params?.id);
+        .update({ isWishlist: isPressed })
+        .eq("id", id)
+        .select();
 
       console.log({ products });
 
-      //setIsPressed(products);
+      if (error) {
+        console.log({ error });
+      }
     };
 
     FavoriteItems();
@@ -61,7 +66,7 @@ export default function ItemScreen({ navigation, route }) {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
-  //console.log(isPressed);
+  console.log(isPressed);
   //console.log(route.params?.id);
   return (
     <ScrollView>
