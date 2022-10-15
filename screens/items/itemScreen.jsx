@@ -24,7 +24,8 @@ const windowHeight = Dimensions.get("window").height;
 export default function ItemScreen({ navigation, route }) {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
-  const [isPressed, setIsPressed] = useState(null);
+  const [isPressed, setIsPressed] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([
     require("../../assets/images/jumtron/jumbotron.jpg"),
     require("../../assets/images/jumtron/jumbotron_2.jpg"),
@@ -35,13 +36,18 @@ export default function ItemScreen({ navigation, route }) {
     const FavoriteItems = async () => {
       let { data: products, error } = await supabase
         .from("products")
-        .select("isWishlist");
+        .select("title")
+        .eq("id", route.params?.id);
 
-      setIsPressed(products);
+      console.log({ products });
+
+      //setIsPressed(products);
     };
 
     FavoriteItems();
   }, []);
+
+  // if else if hoverPress
 
   const hoverHearth = () => {
     setIsPressed(!isPressed);
@@ -55,8 +61,8 @@ export default function ItemScreen({ navigation, route }) {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
-  console.log({ isPressed });
-
+  //console.log(isPressed);
+  //console.log(route.params?.id);
   return (
     <ScrollView>
       <View style={styles.container}>
