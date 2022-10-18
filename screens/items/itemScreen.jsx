@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect } from "react";
+import Apploading from "expo-app-loading";
 import { supabase } from "../../supabase";
 import {
   StyleSheet,
@@ -25,6 +26,7 @@ export default function ItemScreen({ navigation, route }) {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
+  const [wishList, setWishList] = useState(false);
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([
     require("../../assets/images/jumtron/jumbotron.jpg"),
@@ -34,28 +36,47 @@ export default function ItemScreen({ navigation, route }) {
 
   const id = route.params?.id;
 
+  // useEffect(() => {
+  //   const fetchIsWishlist = async () => {
+  //     const { data: products, error } = await supabase
+  //       .from("products")
+  //       .select("isWishlist")
+  //       .eq("id", id);
+
+  //     if (products) {
+  //       return setWishList(products);
+  //     }
+
+  //     if (error) {
+  //       console.log(`fetchwishlist ${error}`);
+  //     }
+  //   };
+
+  //   fetchIsWishlist();
+  // }, []);
+
   useEffect(() => {
     const FavoriteItems = async () => {
       let { data: products, error } = await supabase
         .from("products")
-        .update({ isWishlist: isPressed })
+        .update({ isWishlist: wishList })
         .eq("id", id)
         .select();
-
-      console.log({ products });
 
       if (error) {
         console.log({ error });
       }
+
+      if (products) {
+        console.log({ products });
+      }
     };
 
     FavoriteItems();
-  }, []);
-
-  // if else if hoverPress
+  }, [wishList]);
 
   const hoverHearth = () => {
-    setIsPressed(!isPressed);
+    setWishList(!wishList);
   };
 
   const toggleNumberOfLines = () => {
@@ -66,7 +87,7 @@ export default function ItemScreen({ navigation, route }) {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
-  console.log(isPressed);
+  // console.log(isPressed);
   //console.log(route.params?.id);
   return (
     <ScrollView>
@@ -103,7 +124,7 @@ export default function ItemScreen({ navigation, route }) {
                     <HeartIcon
                       width={22}
                       height={22}
-                      fill={isPressed ? "#E71D36" : "#A9A9A9"}
+                      fill={wishList ? "#E71D36" : "#A9A9A9"}
                     />
                   </Pressable>
                 </View>
