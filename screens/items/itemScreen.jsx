@@ -23,11 +23,10 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function ItemScreen({ navigation, route }) {
-  const ThisIsWishList = route.params?.isWishlist;
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const [getProduct, setGetProduct] = useState(null);
-  const [wishList, setWishList] = useState(ThisIsWishList);
+  const [wishList, setWishList] = useState(false);
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([
     require("../../assets/images/jumtron/jumbotron.jpg"),
@@ -38,7 +37,7 @@ export default function ItemScreen({ navigation, route }) {
   const id = route.params?.id;
 
   useEffect(() => {
-    const fetchIsWishlist = async () => {
+    const fetchProduct = async () => {
       setLoading(true);
       const { data: products, error } = await supabase
         .from("products")
@@ -47,16 +46,15 @@ export default function ItemScreen({ navigation, route }) {
 
       if (products) {
         setGetProduct(products);
-        setLoading(false);
       }
 
       if (error) {
         console.log(`fetchwishlist ${error}`);
-        setLoading(false);
       }
+      setLoading(false);
     };
 
-    fetchIsWishlist();
+    fetchProduct();
   }, []);
 
   useEffect(() => {
@@ -91,93 +89,114 @@ export default function ItemScreen({ navigation, route }) {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
-  // console.log({ x });
+  console.log({ getProduct });
+
   //console.log(route.params?.id);
+
+  if (!getProduct) {
+    return <Apploading />;
+  }
   return (
     <ScrollView>
       <View style={styles.container}>
-        <View>
-          <Carousel
-            autoPlay={false}
-            width={windowWidth}
-            height={windowHeight / 3.2}
-            data={images}
-            renderItem={({ item, index }) => (
-              <Image style={styles.imageJumbotron} source={item} key={index} />
-            )}
-            // renderItem={({ item, index }) => (
-            //   <Image style={styles.imageJumbotron} source={item} key={index} />
-            // )}
-          />
-        </View>
-        <View style={styles.titleAndPrizeLayer}>
-          <View
-            style={{ flexDirection: "row", justifyContent: "space-between" }}
-          >
-            <View>
-              <View style={styles.titleAndFav}>
-                <View>
-                  <Text style={styles.titleProduct}>{route.params?.title}</Text>
-                </View>
-                <View style={{ paddingHorizontal: 10 }}>
-                  <Pressable onPress={hoverHearth}>
-                    <HeartIcon
-                      width={22}
-                      height={22}
-                      fill={wishList ? "#E71D36" : "#A9A9A9"}
+        {getProduct.map((product) => {
+          return (
+            <View key={product.id}>
+              <View>
+                <Carousel
+                  autoPlay={false}
+                  width={windowWidth}
+                  height={windowHeight / 3.2}
+                  data={images}
+                  renderItem={({ item, index }) => (
+                    <Image
+                      style={styles.imageJumbotron}
+                      source={item}
+                      key={index}
                     />
-                  </Pressable>
+                  )}
+                  // renderItem={({ item, index }) => (
+                  //   <Image style={styles.imageJumbotron} source={item} key={index} />
+                  // )}
+                />
+              </View>
+              <View style={styles.titleAndPrizeLayer}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    justifyContent: "space-between",
+                  }}
+                >
+                  <View>
+                    <View style={styles.titleAndFav}>
+                      <View>
+                        <Text style={styles.titleProduct}>
+                          {product?.title}
+                        </Text>
+                      </View>
+                      <View style={{ paddingHorizontal: 10 }}>
+                        <Pressable onPress={hoverHearth}>
+                          <HeartIcon
+                            width={22}
+                            height={22}
+                            fill={wishList ? "#E71D36" : "#A9A9A9"}
+                          />
+                        </Pressable>
+                      </View>
+                    </View>
+
+                    <View style={styles.labelLayout}>
+                      <Text style={styles.labelProduct}>New</Text>
+                      <Text style={styles.labelProduct}> | </Text>
+                      <Text style={styles.labelProduct}>Unisex</Text>
+                      <Text style={styles.labelProduct}> | </Text>
+                      <Text style={styles.labelProduct}>Available</Text>
+                    </View>
+                    <View style={styles.priceLayout}>
+                      <GradientText styleFont={styles.priceProduct}>
+                        {`$ ${product?.price}`}
+                      </GradientText>
+                    </View>
+                  </View>
+                  <NumberPick title="Size" styleFont={{ color: "#000" }} />
                 </View>
               </View>
+              <View></View>
+              <View style={styles.descriptionLayout}>
+                <View style={{ alignItems: "center" }}>
+                  <Text style={styles.descriptionLabel}>Description</Text>
+                </View>
+                <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
+                  <Text
+                    onTextLayout={onTextLayout}
+                    numberOfLines={textShown ? undefined : 4}
+                    style={[{ lineHeight: 21 }]}
+                  >
+                    <Text style={styles.descriptionText}>
+                      {product?.description}
+                    </Text>
+                  </Text>
 
-              <View style={styles.labelLayout}>
-                <Text style={styles.labelProduct}>New</Text>
-                <Text style={styles.labelProduct}> | </Text>
-                <Text style={styles.labelProduct}>Unisex</Text>
-                <Text style={styles.labelProduct}> | </Text>
-                <Text style={styles.labelProduct}>Available</Text>
-              </View>
-              <View style={styles.priceLayout}>
-                <GradientText styleFont={styles.priceProduct}>
-                  {`$ ${route.params?.price}`}
-                </GradientText>
+                  {lengthMore ? (
+                    <Text
+                      onPress={toggleNumberOfLines}
+                      style={{
+                        lineHeight: 21,
+                        marginTop: 10,
+
+                        fontFamily: "Josefin-Sans-Regular",
+                        color: "#404040",
+                      }}
+                    >
+                      {textShown ? "Read less..." : "Read more..."}
+                    </Text>
+                  ) : null}
+                </View>
               </View>
             </View>
-            <NumberPick title="Size" styleFont={{ color: "#000" }} />
-          </View>
-        </View>
-        <View></View>
-        <View style={styles.descriptionLayout}>
-          <View style={{ alignItems: "center" }}>
-            <Text style={styles.descriptionLabel}>Description</Text>
-          </View>
-          <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
-            <Text
-              onTextLayout={onTextLayout}
-              numberOfLines={textShown ? undefined : 4}
-              style={[{ lineHeight: 21 }]}
-            >
-              <Text style={styles.descriptionText}>
-                {route.params?.description}
-              </Text>
-            </Text>
+          );
+        })}
 
-            {lengthMore ? (
-              <Text
-                onPress={toggleNumberOfLines}
-                style={{
-                  lineHeight: 21,
-                  marginTop: 10,
-
-                  fontFamily: "Josefin-Sans-Regular",
-                  color: "#404040",
-                }}
-              >
-                {textShown ? "Read less..." : "Read more..."}
-              </Text>
-            ) : null}
-          </View>
-        </View>
         <View style={{ marginVertical: 30 }}>
           <Pressable onPress={() => console.log("worked buy Now")}>
             <View
