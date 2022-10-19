@@ -102,6 +102,7 @@ export default function HomeScreen({ navigation }) {
                       price: item.price,
                       description: item.description,
                       photo: item.imageUrl,
+                      isWishlist: item.isWishlist,
                     })
                   }
                 >
@@ -146,6 +147,7 @@ export default function HomeScreen({ navigation }) {
                         id: item.id,
                         price: item.price,
                         description: item.description,
+                        isWishlist: item.isWishlist,
                       })
                     }
                   >

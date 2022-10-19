@@ -23,10 +23,11 @@ const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
 export default function ItemScreen({ navigation, route }) {
+  const ThisIsWishList = route.params?.isWishlist;
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const [isPressed, setIsPressed] = useState(false);
-  const [wishList, setWishList] = useState(false);
+  const [wishList, setWishList] = useState(ThisIsWishList);
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([
     require("../../assets/images/jumtron/jumbotron.jpg"),
@@ -35,25 +36,6 @@ export default function ItemScreen({ navigation, route }) {
   ]);
 
   const id = route.params?.id;
-
-  // useEffect(() => {
-  //   const fetchIsWishlist = async () => {
-  //     const { data: products, error } = await supabase
-  //       .from("products")
-  //       .select("isWishlist")
-  //       .eq("id", id);
-
-  //     if (products) {
-  //       return setWishList(products);
-  //     }
-
-  //     if (error) {
-  //       console.log(`fetchwishlist ${error}`);
-  //     }
-  //   };
-
-  //   fetchIsWishlist();
-  // }, []);
 
   useEffect(() => {
     const FavoriteItems = async () => {
@@ -87,7 +69,7 @@ export default function ItemScreen({ navigation, route }) {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
-  // console.log(isPressed);
+  // console.log({ x });
   //console.log(route.params?.id);
   return (
     <ScrollView>
@@ -116,11 +98,7 @@ export default function ItemScreen({ navigation, route }) {
                   <Text style={styles.titleProduct}>{route.params?.title}</Text>
                 </View>
                 <View style={{ paddingHorizontal: 10 }}>
-                  <Pressable
-                    // onHideUnderlay={() => setIsPress(false)}
-                    // onShowUnderlay={() => setIsPress(true)}
-                    onPress={hoverHearth}
-                  >
+                  <Pressable onPress={hoverHearth}>
                     <HeartIcon
                       width={22}
                       height={22}
@@ -345,3 +323,22 @@ const styles = StyleSheet.create({
     color: "#404040",
   },
 });
+
+// useEffect(() => {
+//   const fetchIsWishlist = async () => {
+//     const { data: products, error } = await supabase
+//       .from("products")
+//       .select("isWishlist")
+//       .eq("id", id);
+
+//     if (products) {
+//       return setWishList(products);
+//     }
+
+//     if (error) {
+//       console.log(`fetchwishlist ${error}`);
+//     }
+//   };
+
+//   fetchIsWishlist();
+// }, []);
