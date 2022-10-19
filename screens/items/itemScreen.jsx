@@ -26,7 +26,7 @@ export default function ItemScreen({ navigation, route }) {
   const ThisIsWishList = route.params?.isWishlist;
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
-  const [isPressed, setIsPressed] = useState(false);
+  const [getProduct, setGetProduct] = useState(null);
   const [wishList, setWishList] = useState(ThisIsWishList);
   const [loading, setLoading] = useState(false);
   const [images, setImages] = useState([
@@ -36,6 +36,28 @@ export default function ItemScreen({ navigation, route }) {
   ]);
 
   const id = route.params?.id;
+
+  useEffect(() => {
+    const fetchIsWishlist = async () => {
+      setLoading(true);
+      const { data: products, error } = await supabase
+        .from("products")
+        .select()
+        .eq("id", id);
+
+      if (products) {
+        setGetProduct(products);
+        setLoading(false);
+      }
+
+      if (error) {
+        console.log(`fetchwishlist ${error}`);
+        setLoading(false);
+      }
+    };
+
+    fetchIsWishlist();
+  }, []);
 
   useEffect(() => {
     const FavoriteItems = async () => {
@@ -323,22 +345,3 @@ const styles = StyleSheet.create({
     color: "#404040",
   },
 });
-
-// useEffect(() => {
-//   const fetchIsWishlist = async () => {
-//     const { data: products, error } = await supabase
-//       .from("products")
-//       .select("isWishlist")
-//       .eq("id", id);
-
-//     if (products) {
-//       return setWishList(products);
-//     }
-
-//     if (error) {
-//       console.log(`fetchwishlist ${error}`);
-//     }
-//   };
-
-//   fetchIsWishlist();
-// }, []);
