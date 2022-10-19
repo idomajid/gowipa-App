@@ -1,8 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { View, Image, Button, Pressable, Alert } from "react-native";
-import { useState } from "react";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
-
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 import HomeScreen from "../screens/HomeScreen";
@@ -21,12 +19,6 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const MyHomeTabScreen = ({ navigation }) => {
-  const [isPressed, setIsPressed] = useState(false);
-
-  const hoverHearth = () => {
-    setIsPressed(!isPressed);
-  };
-
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -54,19 +46,6 @@ const MyHomeTabScreen = ({ navigation }) => {
               >
                 <ArrowBackIcon width={25} height={25} fill={"#F6F9FF"} />
               </View>
-            </Pressable>
-          ),
-          headerRight: () => (
-            <Pressable
-              // onHideUnderlay={() => setIsPress(false)}
-              // onShowUnderlay={() => setIsPress(true)}
-              onPress={hoverHearth}
-            >
-              <HeartIcon
-                width={25}
-                height={25}
-                fill={isPressed ? "#E71D36" : "#A9A9A9"}
-              />
             </Pressable>
           ),
         })}
