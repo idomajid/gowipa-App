@@ -32,15 +32,14 @@ export default function HomeScreen({ navigation }) {
     require("../assets/images/jumtron/jumbotron.jpg"),
   ]);
 
-  const quoteFetch = async () => {
-    let response = await axios.get("https://api.quotable.io/random");
-    if (!response.data) {
-      <Apploading />;
-    }
-    setQuote(response.data);
-  };
-
   useEffect(() => {
+    const quoteFetch = async () => {
+      let response = await axios.get("https://api.quotable.io/random");
+      if (!response.data) {
+        <Apploading />;
+      }
+      setQuote(response.data);
+    };
     quoteFetch();
   }, []);
 
@@ -48,13 +47,12 @@ export default function HomeScreen({ navigation }) {
     <AppLoading />;
   }
 
-  async function productFetch() {
-    let { data, error } = await supabase.from("products").select();
-    setDataSupabase(data);
-    return dataSupabase;
-  }
-
   useEffect(() => {
+    async function productFetch() {
+      let { data, error } = await supabase.from("products").select();
+      setDataSupabase(data);
+      return dataSupabase;
+    }
     productFetch();
   }, []);
 
@@ -97,12 +95,7 @@ export default function HomeScreen({ navigation }) {
                 <Pressable
                   onPress={() =>
                     navigation.navigate("Items", {
-                      title: item.title,
                       id: item.id,
-                      price: item.price,
-                      description: item.description,
-                      photo: item.imageUrl,
-                      isWishlist: item.isWishlist,
                     })
                   }
                 >
@@ -143,11 +136,7 @@ export default function HomeScreen({ navigation }) {
                     key={item.id}
                     onPress={() =>
                       navigation.navigate("Items", {
-                        title: item.title,
                         id: item.id,
-                        price: item.price,
-                        description: item.description,
-                        isWishlist: item.isWishlist,
                       })
                     }
                   >
