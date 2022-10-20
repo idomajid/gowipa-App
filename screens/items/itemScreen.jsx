@@ -28,11 +28,12 @@ export default function ItemScreen({ navigation, route }) {
   const [getProduct, setGetProduct] = useState(null);
   const [wishList, setWishList] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [images, setImages] = useState([
-    require("../../assets/images/jumtron/jumbotron.jpg"),
-    require("../../assets/images/jumtron/jumbotron_2.jpg"),
-    require("../../assets/images/jumtron/jumbotron.jpg"),
-  ]);
+  // const [images, setImages] = useState();
+  // const [images, setImages] = useState([
+  //   require("../../assets/images/jumtron/jumbotron.jpg"),
+  //   require("../../assets/images/jumtron/jumbotron_2.jpg"),
+  //   require("../../assets/images/jumtron/jumbotron.jpg"),
+  // ]);
 
   const id = route.params?.id;
 
@@ -46,6 +47,7 @@ export default function ItemScreen({ navigation, route }) {
 
       if (products) {
         setGetProduct(products);
+        // setWishList(products.isWishlist);
       }
 
       if (error) {
@@ -57,29 +59,29 @@ export default function ItemScreen({ navigation, route }) {
     fetchProduct();
   }, []);
 
-  useEffect(() => {
-    const FavoriteItems = async () => {
-      let { data: products, error } = await supabase
-        .from("products")
-        .update({ isWishlist: wishList })
-        .eq("id", id)
-        .select();
+  // useEffect(() => {
+  //   const FavoriteItems = async () => {
+  //     let { data: products, error } = await supabase
+  //       .from("products")
+  //       .update({ isWishlist: wishList })
+  //       .eq("id", id)
+  //       .select();
 
-      if (error) {
-        console.log({ error });
-      }
+  //     if (error) {
+  //       console.log({ error });
+  //     }
 
-      if (products) {
-        console.log({ products });
-      }
-    };
+  //     if (products) {
+  //       console.log({ products });
+  //     }
+  //   };
 
-    FavoriteItems();
-  }, [wishList]);
+  //   FavoriteItems();
+  // }, [wishList]);
 
-  const hoverHearth = () => {
-    setWishList(!wishList);
-  };
+  // const hoverHearth = () => {
+  //   setWishList(!wishList);
+  // };
 
   const toggleNumberOfLines = () => {
     setTextShown(!textShown);
@@ -89,17 +91,15 @@ export default function ItemScreen({ navigation, route }) {
     setLengthMore(e.nativeEvent.lines.length >= 4);
   }, []);
 
-  console.log({ getProduct });
-
-  //console.log(route.params?.id);
-
   if (!getProduct) {
     return <Apploading />;
   }
+
   return (
     <ScrollView>
       <View style={styles.container}>
         {getProduct.map((product) => {
+          console.log({ product });
           return (
             <View key={product.id}>
               <View>
@@ -107,11 +107,12 @@ export default function ItemScreen({ navigation, route }) {
                   autoPlay={false}
                   width={windowWidth}
                   height={windowHeight / 3.2}
-                  data={images}
+                  data={getProduct}
                   renderItem={({ item, index }) => (
                     <Image
                       style={styles.imageJumbotron}
-                      source={item}
+                      source={[item.imageUrl]}
+                      // source={{ uri: item.imageUrl }}
                       key={index}
                     />
                   )}
@@ -134,7 +135,7 @@ export default function ItemScreen({ navigation, route }) {
                           {product?.title}
                         </Text>
                       </View>
-                      <View style={{ paddingHorizontal: 10 }}>
+                      {/* <View style={{ paddingHorizontal: 10 }}>
                         <Pressable onPress={hoverHearth}>
                           <HeartIcon
                             width={22}
@@ -142,7 +143,7 @@ export default function ItemScreen({ navigation, route }) {
                             fill={wishList ? "#E71D36" : "#A9A9A9"}
                           />
                         </Pressable>
-                      </View>
+                      </View> */}
                     </View>
 
                     <View style={styles.labelLayout}>
@@ -161,7 +162,7 @@ export default function ItemScreen({ navigation, route }) {
                   <NumberPick title="Size" styleFont={{ color: "#000" }} />
                 </View>
               </View>
-              <View></View>
+
               <View style={styles.descriptionLayout}>
                 <View style={{ alignItems: "center" }}>
                   <Text style={styles.descriptionLabel}>Description</Text>
