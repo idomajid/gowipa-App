@@ -10,10 +10,11 @@ import {
   ScrollView,
   FlatList,
   Pressable,
+  Alert,
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 
-import HeartIcon from "../../assets/tabIcons/heart.svg";
+// import HeartIcon from "../../assets/tabIcons/heart.svg";
 import DummyData from "../../data/dummy-data";
 import GradientText from "../../components/gradientText";
 import ProductHotItemCard from "../../components/productHotItemCard";
@@ -26,8 +27,9 @@ export default function ItemScreen({ navigation, route }) {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const [getProduct, setGetProduct] = useState(null);
-  const [wishList, setWishList] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [getRecommendedProduct, setGetRecommendedProduct] = useState(null);
+  // const [wishList, setWishList] = useState(false);
+
   // const [images, setImages] = useState();
   // const [images, setImages] = useState([
   //   require("../../assets/images/jumtron/jumbotron.jpg"),
@@ -39,7 +41,6 @@ export default function ItemScreen({ navigation, route }) {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      setLoading(true);
       const { data: products, error } = await supabase
         .from("products")
         .select()
@@ -53,10 +54,19 @@ export default function ItemScreen({ navigation, route }) {
       if (error) {
         console.log(`fetchwishlist ${error}`);
       }
-      setLoading(false);
     };
 
     fetchProduct();
+  }, []);
+
+  useEffect(() => {
+    async function productFetch() {
+      setLoading(true);
+      let { data: products, error } = await supabase.from("products").select();
+      setGetRecommendedProduct(products);
+      setLoading(false);
+    }
+    productFetch();
   }, []);
 
   // useEffect(() => {
@@ -95,11 +105,21 @@ export default function ItemScreen({ navigation, route }) {
     return <Apploading />;
   }
 
+  const AlertDummy = () => {
+    Alert.alert("Alert Title", "My Alert Msg", [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") },
+    ]);
+  };
+
   return (
     <ScrollView>
       <View style={styles.container}>
         {getProduct.map((product) => {
-          console.log({ product });
           return (
             <View key={product.id}>
               <View>
@@ -111,8 +131,8 @@ export default function ItemScreen({ navigation, route }) {
                   renderItem={({ item, index }) => (
                     <Image
                       style={styles.imageJumbotron}
-                      source={[item.imageUrl]}
-                      // source={{ uri: item.imageUrl }}
+                      source={[{ uri: item.imageUrl }]}
+                      // source={}
                       key={index}
                     />
                   )}
@@ -222,7 +242,7 @@ export default function ItemScreen({ navigation, route }) {
               </Text>
             </View>
           </Pressable>
-          <Pressable onPress={() => console.log("worked Add to cart")}>
+          <Pressable onPress={() => AlertDummy()}>
             <View
               style={{
                 paddingVertical: 18,
@@ -255,25 +275,22 @@ export default function ItemScreen({ navigation, route }) {
         <View style={styles.RecommendationLayout}>
           <FlatList
             horizontal
-            data={DummyData}
+            data={getRecommendedProduct}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => {
               return (
                 <Pressable
-                  onPress={() =>
-                    navigation.navigate("Items", {
-                      title: item.title,
-                      id: item.id,
-                      price: item.price,
-                      description: item.description,
-                      photo: item.photo,
-                    })
+                  onPress={
+                    () => console.log("Pressthisss")
+                    // navigation.navigate("Items", {
+                    //   id: item.id,
+                    // })
                   }
                 >
                   <ProductHotItemCard
-                    productImage={item.photo}
+                    productImage={{ uri: item.imageUrl }}
                     title={item.title}
-                    description={item.desConclution}
+                    description={item.desConclusion}
                     price={`$${item.price}`}
                   />
                 </Pressable>
