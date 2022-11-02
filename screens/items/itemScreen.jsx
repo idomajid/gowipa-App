@@ -31,6 +31,7 @@ export default function ItemScreen({ navigation, route }) {
   const [getProduct, setGetProduct] = useState(null);
   const [getRecommendedProduct, setGetRecommendedProduct] = useState(null);
   const [addCart, setAddCart] = useState(false);
+
   // const [wishList, setWishList] = useState(false);
 
   // const [images, setImages] = useState();
@@ -64,10 +65,8 @@ export default function ItemScreen({ navigation, route }) {
 
   useEffect(() => {
     async function productFetch() {
-      setLoading(true);
       let { data: products, error } = await supabase.from("products").select();
       setGetRecommendedProduct(products);
-      setLoading(false);
     }
     productFetch();
   }, []);
@@ -225,52 +224,61 @@ export default function ItemScreen({ navigation, route }) {
           <AlertCartCard
             onRequestClose={() => setAddCart(!addCart)}
             visible={addCart}
-            onPressHideModal={() => setAddCart(!addCart)}
-          />
+          >
+            <View style={styles.centeredView}>
+              <View style={styles.modalView}>
+                <Text style={styles.modalText}>dkjqwjkdqwkjdqwjkhwkjqkh</Text>
+                <View style={{ flexDirection: "row" }}>
+                  <Pressable
+                    style={[
+                      styles.modalButton,
+                      styles.modalBackgroundColorBlack,
+                    ]}
+                    onPress={() => setAddCart(!addCart)}
+                  >
+                    <Text
+                      style={[
+                        styles.textStyleModal,
+                        styles.buttonWhiteLabelColor,
+                      ]}
+                    >
+                      Process to checkout
+                    </Text>
+                  </Pressable>
+                  <Pressable
+                    style={[
+                      styles.modalButton,
+                      styles.modalBackgroundColorWhite,
+                    ]}
+                    onPress={() => setAddCart(!addCart)}
+                  >
+                    <Text
+                      style={[
+                        styles.textStyleModal,
+                        styles.buttonBlackLabelColor,
+                      ]}
+                    >
+                      Go to cart
+                    </Text>
+                  </Pressable>
+                </View>
+              </View>
+            </View>
+          </AlertCartCard>
+
           <Pressable onPress={() => console.log("worked Buy Now")}>
-            <View
-              style={{
-                paddingVertical: 20,
-                marginHorizontal: 20,
-                borderRadius: 2,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#000",
-              }}
-            >
+            <View style={[styles.buyNowButton, styles.mainButton]}>
               <Text
-                style={{
-                  color: "#ffff",
-                  fontFamily: "Josefin-Sans-Regular",
-                  fontSize: 18,
-                  lineHeight: 18,
-                }}
+                style={[styles.buttonTextLabel, styles.buttonWhiteLabelColor]}
               >
                 Buy now
               </Text>
             </View>
           </Pressable>
           <Pressable onPress={() => setAddCart(true)}>
-            <View
-              style={{
-                paddingVertical: 18,
-                marginHorizontal: 20,
-                borderRadius: 2,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#fff",
-                borderWidth: 1,
-                borderColor: "#000",
-                marginTop: 20,
-              }}
-            >
+            <View style={[styles.mainButton, styles.addCartButton]}>
               <Text
-                style={{
-                  color: "#000",
-                  fontFamily: "Josefin-Sans-Regular",
-                  fontSize: 18,
-                  lineHeight: 18,
-                }}
+                style={[styles.buttonTextLabel, styles.buttonBlackLabelColor]}
               >
                 Add to cart
               </Text>
@@ -366,7 +374,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 14,
     color: "#404040",
-
     marginHorizontal: 10,
   },
   descriptionText: {
@@ -374,6 +381,34 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 21,
     color: "#404040",
+  },
+  mainButton: {
+    paddingVertical: 18,
+    marginHorizontal: 20,
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+  },
+  addCartButton: {
+    backgroundColor: "#fff",
+    borderColor: "#000",
+    marginTop: 20,
+  },
+  buyNowButton: {
+    backgroundColor: "#000",
+    borderColor: "#000",
+  },
+  buttonTextLabel: {
+    fontFamily: "Josefin-Sans-Regular",
+    fontSize: 18,
+    lineHeight: 18,
+  },
+  buttonWhiteLabelColor: {
+    color: "#ffff",
+  },
+  buttonBlackLabelColor: {
+    color: "#000",
   },
   RecommendationLayout: {
     marginTop: 10,
@@ -388,5 +423,54 @@ const styles = StyleSheet.create({
     marginTop: 10,
 
     color: "#404040",
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+
+    backgroundColor: "rgba(52, 52, 52, 0.8)",
+  },
+  modalView: {
+    width: 308,
+    height: 295,
+    backgroundColor: "white",
+    borderRadius: 2,
+    paddingTop: 20,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+  },
+  textStyleModal: {
+    fontFamily: "Josefin-Sans-Regular",
+    fontSize: 12,
+    lineHeight: 12,
+    textAlign: "center",
+  },
+  modalText: {
+    marginBottom: 15,
+    textAlign: "center",
+  },
+  modalButton: {
+    paddingHorizontal: 20,
+    paddingVertical: 12,
+    marginHorizontal: 5,
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+    borderColor: "#000",
+  },
+  modalBackgroundColorBlack: {
+    backgroundColor: "#000",
+  },
+  modalBackgroundColorWhite: {
+    backgroundColor: "#ffff",
   },
 });
