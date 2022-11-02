@@ -227,7 +227,7 @@ export default function ItemScreen({ navigation, route }) {
             visible={addCart}
             onPressHideModal={() => setAddCart(!addCart)}
           />
-          <Pressable onPress={() => setAddCart(true)}>
+          <Pressable onPress={() => console.log("worked Buy Now")}>
             <View
               style={{
                 paddingVertical: 20,
@@ -250,7 +250,7 @@ export default function ItemScreen({ navigation, route }) {
               </Text>
             </View>
           </Pressable>
-          <Pressable onPress={() => AlertDummy()}>
+          <Pressable onPress={() => setAddCart(true)}>
             <View
               style={{
                 paddingVertical: 18,
