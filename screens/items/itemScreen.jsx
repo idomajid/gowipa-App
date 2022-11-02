@@ -17,6 +17,8 @@ import Carousel from "react-native-reanimated-carousel";
 // import HeartIcon from "../../assets/tabIcons/heart.svg";
 import DummyData from "../../data/dummy-data";
 import GradientText from "../../components/gradientText";
+import AlertCartCard from "../../components/assetCards/CostumAlertCard";
+
 import ProductHotItemCard from "../../components/productHotItemCard";
 import NumberPick from "../../components/numberPick";
 
@@ -28,6 +30,7 @@ export default function ItemScreen({ navigation, route }) {
   const [lengthMore, setLengthMore] = useState(false);
   const [getProduct, setGetProduct] = useState(null);
   const [getRecommendedProduct, setGetRecommendedProduct] = useState(null);
+  const [addCart, setAddCart] = useState(false);
   // const [wishList, setWishList] = useState(false);
 
   // const [images, setImages] = useState();
@@ -219,7 +222,12 @@ export default function ItemScreen({ navigation, route }) {
         })}
 
         <View style={{ marginVertical: 30 }}>
-          <Pressable onPress={() => console.log("worked buy Now")}>
+          <AlertCartCard
+            onRequestClose={() => setAddCart(!addCart)}
+            visible={addCart}
+            onPressHideModal={() => setAddCart(!addCart)}
+          />
+          <Pressable onPress={() => setAddCart(true)}>
             <View
               style={{
                 paddingVertical: 20,
