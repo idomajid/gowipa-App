@@ -16,6 +16,7 @@ import AppLoading from "expo-app-loading";
 import Carousel from "react-native-reanimated-carousel";
 import ProductHotItemCard from "../components/productHotItemCard";
 import ProductHomeCard from "../components/productHomeCard";
+import AlertCard from "../components/assetCards/CostumAlertCard";
 
 import DummyData from "../data/dummy-data";
 import { supabase } from "../supabase";
@@ -85,6 +86,7 @@ export default function HomeScreen({ navigation }) {
         <View style={{ marginTop: 10, marginHorizontal: 10 }}>
           <Text style={styles.HotItemTitle}>Hot Items</Text>
         </View>
+
         <View style={styles.HotItemLayout}>
           <FlatList
             horizontal
