@@ -123,168 +123,179 @@ export default function ItemScreen({ navigation, route }) {
       <View style={styles.container}>
         {getProduct.map((product) => {
           return (
-            <View key={product.id}>
-              <View>
-                <Carousel
-                  autoPlay={false}
-                  width={windowWidth}
-                  height={windowHeight / 3.2}
-                  data={getProduct}
-                  renderItem={({ item, index }) => (
-                    <Image
-                      style={styles.imageJumbotron}
-                      source={[{ uri: item.imageUrl }]}
-                      // source={}
-                      key={index}
-                    />
-                  )}
-                  // renderItem={({ item, index }) => (
-                  //   <Image style={styles.imageJumbotron} source={item} key={index} />
-                  // )}
-                />
-              </View>
-              <View style={styles.titleAndPrizeLayer}>
-                <View
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <View>
-                    <View style={styles.titleAndFav}>
-                      <View>
-                        <Text style={styles.titleProduct}>
-                          {product?.title}
-                        </Text>
+            <>
+              <View key={product.id}>
+                <View>
+                  <Carousel
+                    autoPlay={false}
+                    width={windowWidth}
+                    height={windowHeight / 3.2}
+                    data={getProduct}
+                    renderItem={({ item, index }) => (
+                      <Image
+                        style={styles.imageJumbotron}
+                        source={[{ uri: item.imageUrl }]}
+                        // source={}
+                        key={index}
+                      />
+                    )}
+                  />
+                </View>
+                <View style={styles.titleAndPrizeLayer}>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                    }}
+                  >
+                    <View>
+                      <View style={styles.titleAndFav}>
+                        <View>
+                          <Text style={styles.titleProduct}>
+                            {product?.title}
+                          </Text>
+                        </View>
+                        {/* <View style={{ paddingHorizontal: 10 }}>
+      <Pressable onPress={hoverHearth}>
+        <HeartIcon
+          width={22}
+          height={22}
+          fill={wishList ? "#E71D36" : "#A9A9A9"}
+        />
+      </Pressable>
+    </View> */}
                       </View>
-                      {/* <View style={{ paddingHorizontal: 10 }}>
-                        <Pressable onPress={hoverHearth}>
-                          <HeartIcon
-                            width={22}
-                            height={22}
-                            fill={wishList ? "#E71D36" : "#A9A9A9"}
-                          />
-                        </Pressable>
-                      </View> */}
+                      <View style={styles.labelLayout}>
+                        <Text style={styles.labelProduct}>New</Text>
+                        <Text style={styles.labelProduct}> | </Text>
+                        <Text style={styles.labelProduct}>Unisex</Text>
+                        <Text style={styles.labelProduct}> | </Text>
+                        <Text style={styles.labelProduct}>Available</Text>
+                      </View>
+                      <View style={styles.priceLayout}>
+                        <GradientText styleFont={styles.priceProduct}>
+                          {`$ ${product?.price}`}
+                        </GradientText>
+                      </View>
                     </View>
+                    <NumberPick title="Size" styleFont={{ color: "#000" }} />
+                  </View>
+                </View>
 
-                    <View style={styles.labelLayout}>
-                      <Text style={styles.labelProduct}>New</Text>
-                      <Text style={styles.labelProduct}> | </Text>
-                      <Text style={styles.labelProduct}>Unisex</Text>
-                      <Text style={styles.labelProduct}> | </Text>
-                      <Text style={styles.labelProduct}>Available</Text>
-                    </View>
-                    <View style={styles.priceLayout}>
-                      <GradientText styleFont={styles.priceProduct}>
-                        {`$ ${product?.price}`}
-                      </GradientText>
+                <View style={styles.descriptionLayout}>
+                  <View style={{ alignItems: "center" }}>
+                    <Text style={styles.descriptionLabel}>Description</Text>
+                  </View>
+                  <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
+                    <Text
+                      onTextLayout={onTextLayout}
+                      numberOfLines={textShown ? undefined : 4}
+                      style={[{ lineHeight: 21 }]}
+                    >
+                      <Text style={styles.descriptionText}>
+                        {product?.description}
+                      </Text>
+                    </Text>
+
+                    {lengthMore ? (
+                      <Text
+                        onPress={toggleNumberOfLines}
+                        style={{
+                          lineHeight: 21,
+                          marginTop: 10,
+
+                          fontFamily: "Josefin-Sans-Regular",
+                          color: "#404040",
+                        }}
+                      >
+                        {textShown ? "Read less..." : "Read more..."}
+                      </Text>
+                    ) : null}
+                  </View>
+                </View>
+              </View>
+              <View style={{ marginVertical: 30 }}>
+                {/*  */}
+                <AlertCartCard
+                  onRequestClose={() => setAddCart(!addCart)}
+                  visible={addCart}
+                >
+                  <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                      <Image
+                        source={[{ uri: product?.imageUrl }]}
+                        style={{ width: 308, height: 160 }}
+                      />
+                      <Text style={styles.modalText}>{product?.title}</Text>
+                      <View>
+                        <Text>{`$ ${product.price}`}</Text>
+                      </View>
+                      <View style={{ flexDirection: "row" }}>
+                        <Pressable
+                          style={[
+                            styles.modalButton,
+                            styles.modalBackgroundColorBlack,
+                          ]}
+                          onPress={() => setAddCart(!addCart)}
+                        >
+                          <Text
+                            style={[
+                              styles.textStyleModal,
+                              styles.buttonWhiteLabelColor,
+                            ]}
+                          >
+                            Process to checkout
+                          </Text>
+                        </Pressable>
+                        <Pressable
+                          style={[
+                            styles.modalButton,
+                            styles.modalBackgroundColorWhite,
+                          ]}
+                          onPress={() => setAddCart(!addCart)}
+                        >
+                          <Text
+                            style={[
+                              styles.textStyleModal,
+                              styles.buttonBlackLabelColor,
+                            ]}
+                          >
+                            Go to cart
+                          </Text>
+                        </Pressable>
+                      </View>
                     </View>
                   </View>
-                  <NumberPick title="Size" styleFont={{ color: "#000" }} />
-                </View>
-              </View>
-
-              <View style={styles.descriptionLayout}>
-                <View style={{ alignItems: "center" }}>
-                  <Text style={styles.descriptionLabel}>Description</Text>
-                </View>
-                <View style={{ marginHorizontal: 20, marginVertical: 15 }}>
-                  <Text
-                    onTextLayout={onTextLayout}
-                    numberOfLines={textShown ? undefined : 4}
-                    style={[{ lineHeight: 21 }]}
-                  >
-                    <Text style={styles.descriptionText}>
-                      {product?.description}
-                    </Text>
-                  </Text>
-
-                  {lengthMore ? (
-                    <Text
-                      onPress={toggleNumberOfLines}
-                      style={{
-                        lineHeight: 21,
-                        marginTop: 10,
-
-                        fontFamily: "Josefin-Sans-Regular",
-                        color: "#404040",
-                      }}
-                    >
-                      {textShown ? "Read less..." : "Read more..."}
-                    </Text>
-                  ) : null}
-                </View>
-              </View>
-            </View>
-          );
-        })}
-
-        <View style={{ marginVertical: 30 }}>
-          <AlertCartCard
-            onRequestClose={() => setAddCart(!addCart)}
-            visible={addCart}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <Text style={styles.modalText}>dkjqwjkdqwkjdqwjkhwkjqkh</Text>
-                <View style={{ flexDirection: "row" }}>
-                  <Pressable
-                    style={[
-                      styles.modalButton,
-                      styles.modalBackgroundColorBlack,
-                    ]}
-                    onPress={() => setAddCart(!addCart)}
-                  >
+                </AlertCartCard>
+                <Pressable onPress={() => console.log("worked Buy Now")}>
+                  <View style={[styles.buyNowButton, styles.mainButton]}>
                     <Text
                       style={[
-                        styles.textStyleModal,
+                        styles.buttonTextLabel,
                         styles.buttonWhiteLabelColor,
                       ]}
                     >
-                      Process to checkout
+                      Buy now
                     </Text>
-                  </Pressable>
-                  <Pressable
-                    style={[
-                      styles.modalButton,
-                      styles.modalBackgroundColorWhite,
-                    ]}
-                    onPress={() => setAddCart(!addCart)}
-                  >
+                  </View>
+                </Pressable>
+                <Pressable onPress={() => setAddCart(true)}>
+                  <View style={[styles.mainButton, styles.addCartButton]}>
                     <Text
                       style={[
-                        styles.textStyleModal,
+                        styles.buttonTextLabel,
                         styles.buttonBlackLabelColor,
                       ]}
                     >
-                      Go to cart
+                      Add to cart
                     </Text>
-                  </Pressable>
-                </View>
+                  </View>
+                </Pressable>
               </View>
-            </View>
-          </AlertCartCard>
+            </>
+          );
+        })}
 
-          <Pressable onPress={() => console.log("worked Buy Now")}>
-            <View style={[styles.buyNowButton, styles.mainButton]}>
-              <Text
-                style={[styles.buttonTextLabel, styles.buttonWhiteLabelColor]}
-              >
-                Buy now
-              </Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => setAddCart(true)}>
-            <View style={[styles.mainButton, styles.addCartButton]}>
-              <Text
-                style={[styles.buttonTextLabel, styles.buttonBlackLabelColor]}
-              >
-                Add to cart
-              </Text>
-            </View>
-          </Pressable>
-        </View>
         <View style={{ marginHorizontal: 20 }}>
           <Text style={styles.RecommendationTitle}>Our Recomendation</Text>
         </View>
@@ -436,7 +447,7 @@ const styles = StyleSheet.create({
     height: 295,
     backgroundColor: "white",
     borderRadius: 2,
-    paddingTop: 20,
+
     alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
