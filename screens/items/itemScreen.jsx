@@ -11,6 +11,7 @@ import {
   FlatList,
   Pressable,
   Alert,
+  TouchableOpacity,
 } from "react-native";
 import Carousel from "react-native-reanimated-carousel";
 
@@ -135,7 +136,6 @@ export default function ItemScreen({ navigation, route }) {
                       <Image
                         style={styles.imageJumbotron}
                         source={[{ uri: item.imageUrl }]}
-                        // source={}
                         key={index}
                       />
                     )}
@@ -178,7 +178,11 @@ export default function ItemScreen({ navigation, route }) {
                         </GradientText>
                       </View>
                     </View>
-                    <NumberPick title="Size" styleFont={{ color: "#000" }} />
+
+                    <NumberPick
+                      title="Quantity"
+                      styleFont={{ color: "#000" }}
+                    />
                   </View>
                 </View>
 
@@ -215,58 +219,106 @@ export default function ItemScreen({ navigation, route }) {
                 </View>
               </View>
               <View style={{ marginVertical: 30 }}>
-                {/*  */}
+                {/* https://stackoverflow.com/questions/40483034/close-react-native-modal-by-clicking-on-overlay*/}
+
                 <AlertCartCard
                   onRequestClose={() => setAddCart(!addCart)}
                   visible={addCart}
                 >
-                  <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                      <Image
-                        source={[{ uri: product?.imageUrl }]}
-                        style={{ width: 308, height: 160 }}
-                      />
-                      <Text style={styles.modalText}>{product?.title}</Text>
-                      <View>
-                        <Text>{`$ ${product.price}`}</Text>
-                      </View>
-                      <View style={{ flexDirection: "row" }}>
-                        <Pressable
-                          style={[
-                            styles.modalButton,
-                            styles.modalBackgroundColorBlack,
-                          ]}
-                          onPress={() => setAddCart(!addCart)}
+                  <TouchableOpacity
+                    style={styles.centeredView}
+                    activeOpacity={1}
+                    onPressOut={() => setAddCart(!addCart)}
+                  >
+                    <Pressable>
+                      <View style={styles.modalView}>
+                        <Image
+                          source={[{ uri: product?.imageUrl }]}
+                          style={{ width: 308, height: 160 }}
+                        />
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            marginHorizontal: 30,
+                            marginVertical: 10,
+                            paddingVertical: 2,
+                            justifyContent: "space-between",
+                          }}
                         >
-                          <Text
-                            style={[
-                              styles.textStyleModal,
-                              styles.buttonWhiteLabelColor,
-                            ]}
+                          <View
+                            style={{
+                              flexDirection: "column",
+                            }}
                           >
-                            Process to checkout
-                          </Text>
-                        </Pressable>
-                        <Pressable
-                          style={[
-                            styles.modalButton,
-                            styles.modalBackgroundColorWhite,
-                          ]}
-                          onPress={() => setAddCart(!addCart)}
+                            <View style={{ paddingBottom: 8 }}>
+                              <Text
+                                style={{
+                                  fontFamily: "Josefin-Sans-Regular",
+                                  fontSize: 16,
+                                  lineHeight: 16,
+                                  color: "#000000",
+                                }}
+                              >
+                                {product?.title}
+                              </Text>
+                            </View>
+                            <View>
+                              <GradientText styleFont={styles.priceProduct}>
+                                {`$ ${product?.price}`}
+                              </GradientText>
+                            </View>
+                          </View>
+                          {/* <View>
+                          <NumberPick
+                            title="Quantity"
+                            styleFont={{ color: "#000" }}
+                          />
+                        </View> */}
+                        </View>
+                        <View
+                          style={{
+                            flexDirection: "row",
+                            justifyContent: "center",
+                          }}
                         >
-                          <Text
+                          <Pressable
                             style={[
-                              styles.textStyleModal,
-                              styles.buttonBlackLabelColor,
+                              styles.modalButton,
+                              styles.modalBackgroundColorBlack,
                             ]}
+                            onPress={() => setAddCart(!addCart)}
                           >
-                            Go to cart
-                          </Text>
-                        </Pressable>
+                            <Text
+                              style={[
+                                styles.textStyleModal,
+                                styles.buttonWhiteLabelColor,
+                              ]}
+                            >
+                              Process to checkout
+                            </Text>
+                          </Pressable>
+                          <Pressable
+                            style={[
+                              styles.modalButton,
+                              styles.modalBackgroundColorWhite,
+                            ]}
+                            onPress={() => setAddCart(!addCart)}
+                          >
+                            <Text
+                              style={[
+                                styles.textStyleModal,
+                                styles.buttonBlackLabelColor,
+                              ]}
+                            >
+                              Go to cart
+                            </Text>
+                          </Pressable>
+                        </View>
                       </View>
-                    </View>
-                  </View>
+                    </Pressable>
+                  </TouchableOpacity>
                 </AlertCartCard>
+
                 <Pressable onPress={() => console.log("worked Buy Now")}>
                   <View style={[styles.buyNowButton, styles.mainButton]}>
                     <Text
@@ -448,7 +500,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 2,
 
-    alignItems: "center",
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -464,10 +515,10 @@ const styles = StyleSheet.create({
     lineHeight: 12,
     textAlign: "center",
   },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center",
-  },
+  // modalText: {
+  //   marginBottom: 15,
+  //   textAlign: "center",
+  // },
   modalButton: {
     paddingHorizontal: 20,
     paddingVertical: 12,
