@@ -222,8 +222,11 @@ export default function ItemScreen({ navigation, route }) {
                 {/* https://stackoverflow.com/questions/40483034/close-react-native-modal-by-clicking-on-overlay*/}
 
                 <AlertCartCard
+                  animationType="fade"
+                  transparent={true}
                   onRequestClose={() => setAddCart(!addCart)}
                   visible={addCart}
+                  key={product?.id}
                 >
                   <TouchableOpacity
                     style={styles.centeredView}
