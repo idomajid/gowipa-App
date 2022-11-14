@@ -4,10 +4,11 @@ export default function CostumAlertCard(props) {
   return (
     <View style={styles.centeredView}>
       <Modal
-        animationType="fade"
-        transparent={true}
+        animationType={props.animationType}
+        transparent={props.transparent}
         visible={props.visible}
         onRequestClose={props.onRequestClose}
+        {...props}
       >
         {props.children}
       </Modal>
