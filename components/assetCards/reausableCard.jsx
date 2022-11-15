@@ -39,8 +39,8 @@ export default function ReausableCard(props) {
 
 const styles = StyleSheet.create({
   container: {
-    width: windowWidth - 20,
-    height: windowHeight / 3.2,
+    width: windowWidth,
+    height: windowHeight / 3,
     backgroundColor: "#ffff",
     flexDirection: "row",
     paddingHorizontal: 10,
