@@ -5,6 +5,7 @@ import {
   Dimensions,
   Pressable,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import React from "react";
 import WishlistCard from "../../components/assetCards/ReausableCard";
@@ -17,26 +18,39 @@ export default function CartScreen() {
   return (
     <View style={styles.container}>
       <View style={{ top: 60 }}>
-        <WishlistCard>
-          <View></View>
-          <NumberPick
-            numberPickLayout={styles.numberPickLayout}
-            styleContainer={styles.styleContainer}
-            title="Size"
-            styleFont={styles.styleFont}
-          />
-          <NumberPick
-            numberPickLayout={styles.numberPickLayout}
-            styleContainer={styles.styleContainer}
-            title="Quantity"
-            styleFont={styles.styleFont}
-          />
-          <TouchableOpacity onPress={() => console.log("worked Add to cart")}>
-            <View style={styles.buttonContainer}>
-              <Text style={styles.buttonText}>Delete Item</Text>
-            </View>
-          </TouchableOpacity>
-        </WishlistCard>
+        <ScrollView>
+          <WishlistCard>
+            <NumberPick
+              numberPickLayout={styles.numberPickLayout}
+              styleContainer={styles.styleContainer}
+              title="Size"
+              styleFont={styles.styleFont}
+            />
+            <NumberPick
+              numberPickLayout={styles.numberPickLayout}
+              styleContainer={styles.styleContainer}
+              title="Quantity"
+              styleFont={styles.styleFont}
+            />
+            <TouchableOpacity onPress={() => console.log("worked Add to cart")}>
+              <View style={styles.buttonContainer}>
+                <Text style={styles.buttonText}>Delete Item</Text>
+              </View>
+            </TouchableOpacity>
+          </WishlistCard>
+
+          <View>
+            <Pressable onPress={() => console.log("Disable")}>
+              <View style={[styles.buyNowButton, styles.mainButton]}>
+                <Text
+                  style={[styles.buttonTextLabel, styles.buttonWhiteLabelColor]}
+                >
+                  Proceed to checkout
+                </Text>
+              </View>
+            </Pressable>
+          </View>
+        </ScrollView>
       </View>
     </View>
   );
@@ -77,4 +91,25 @@ const styles = StyleSheet.create({
     lineHeight: 12,
   },
   numberPickLayout: { paddingLeft: 5 },
+  buyNowButton: {
+    backgroundColor: "#F3F4F8",
+    borderColor: "#F3F4F8",
+  },
+  buttonTextLabel: {
+    fontFamily: "Josefin-Sans-Bold",
+    fontSize: 18,
+    lineHeight: 18,
+  },
+
+  mainButton: {
+    paddingVertical: 18,
+    marginHorizontal: 20,
+    borderRadius: 2,
+    justifyContent: "center",
+    alignItems: "center",
+    borderWidth: 1,
+  },
+  buttonWhiteLabelColor: {
+    color: "#BFBFBF",
+  },
 });
