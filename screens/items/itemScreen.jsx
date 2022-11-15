@@ -108,17 +108,6 @@ export default function ItemScreen({ navigation, route }) {
     return <Apploading />;
   }
 
-  const AlertDummy = () => {
-    Alert.alert("Alert Title", "My Alert Msg", [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel",
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") },
-    ]);
-  };
-
   return (
     <ScrollView>
       <View style={styles.container}>
