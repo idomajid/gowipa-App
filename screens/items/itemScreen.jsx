@@ -169,8 +169,9 @@ export default function ItemScreen({ navigation, route }) {
                     </View>
 
                     <NumberPick
+                      styleContainer={{ alignItems: "center" }}
                       title="Quantity"
-                      styleFont={{ color: "#000" }}
+                      styleFont={styles.titleNumberPick}
                     />
                   </View>
                 </View>
@@ -526,5 +527,11 @@ const styles = StyleSheet.create({
   },
   modalBackgroundColorWhite: {
     backgroundColor: "#ffff",
+  },
+  titleNumberPick: {
+    color: "#000",
+    fontFamily: "Josefin-Sans-Regular",
+    fontSize: 16,
+    lineHeight: 21,
   },
 });
