@@ -64,7 +64,6 @@ const MyHomeTabScreen = ({ navigation }) => {
                 style={{
                   width: 100,
                   height: 20,
-
                   flexDirection: "row",
                   justifyContent: "center",
                   alignItems: "center",
