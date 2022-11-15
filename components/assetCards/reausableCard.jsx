@@ -12,7 +12,7 @@ import GradientText from "../gradientText";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ReausableCard() {
+export default function ReausableCard(props) {
   return (
     <View style={{ marginVertical: 10 }}>
       <View style={styles.container}>
@@ -30,54 +30,7 @@ export default function ReausableCard() {
           <Text style={styles.fontTitle}>This is a title for a card</Text>
           <Text style={styles.fontStock}>Stock avaible</Text>
           <GradientText styleFont={styles.priceProduct}>$200</GradientText>
-          <Pressable onPress={() => console.log("worked Add to cart")}>
-            <View
-              style={{
-                paddingVertical: 10,
-                borderRadius: 2,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#000",
-                marginTop: 10,
-              }}
-            >
-              <Text
-                style={{
-                  color: "#fff",
-                  fontFamily: "Josefin-Sans-Regular",
-                  fontSize: 12,
-                  lineHeight: 12,
-                }}
-              >
-                Add to cart
-              </Text>
-            </View>
-          </Pressable>
-          <Pressable onPress={() => console.log("worked Add to cart")}>
-            <View
-              style={{
-                paddingVertical: 10,
-                borderRadius: 2,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: "#fff",
-                borderWidth: 1,
-                borderColor: "#000",
-                marginTop: 10,
-              }}
-            >
-              <Text
-                style={{
-                  color: "#000",
-                  fontFamily: "Josefin-Sans-Regular",
-                  fontSize: 12,
-                  lineHeight: 12,
-                }}
-              >
-                Delete Item
-              </Text>
-            </View>
-          </Pressable>
+          {props.children}
         </View>
       </View>
     </View>
