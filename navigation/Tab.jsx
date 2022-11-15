@@ -1,5 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Image, Button, Pressable, Alert } from "react-native";
+import { View, Image, TouchableOpacity, Pressable, Text } from "react-native";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -52,7 +52,42 @@ const MyHomeTabScreen = ({ navigation }) => {
           ),
         })}
       />
-      <Stack.Screen name="cartScreen" component={CartScreen} />
+      <Stack.Screen
+        name="cartScreen"
+        component={CartScreen}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  width: 100,
+                  height: 20,
+
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  Checkout
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
+        // options={{ headerShown: false, title: `My Cart` }}
+      />
       <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
     </Stack.Navigator>
   );
