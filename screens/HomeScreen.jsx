@@ -19,7 +19,9 @@ import ProductHomeCard from "../components/productHomeCard";
 import AlertCard from "../components/assetCards/CostumAlertCard";
 
 import DummyData from "../data/dummy-data";
+
 import { supabase } from "../supabase";
+import CartIcon from "../assets/icons/shoppingCart.svg";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -66,7 +68,7 @@ export default function HomeScreen({ navigation }) {
             <Text>Gowipa</Text>
           </View>
           <TouchableOpacity onPress={() => navigation.navigate("cartScreen")}>
-            <Text>Click me</Text>
+            <CartIcon width={25} height={25} fill="#000" />
           </TouchableOpacity>
         </View>
 
