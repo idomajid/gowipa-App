@@ -6,8 +6,10 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
 import WishListScreen from "../screens/WishListScreen";
-import ProfileScreen from "../screens/ProfileScreen";
+import SignInScreen from "../screens/profile/SignInScreen";
+import ProfileScreen from "../screens/profile/ProfileScreen";
 import ItemScreen from "../screens/items/itemScreen";
+import CartScreen from "../screens/items/cartScreen";
 
 import HeartIcon from "../assets/tabIcons/heart.svg";
 import HomeIcon from "../assets/tabIcons/home.svg";
@@ -50,6 +52,8 @@ const MyHomeTabScreen = ({ navigation }) => {
           ),
         })}
       />
+      <Stack.Screen name="cartScreen" component={CartScreen} />
+      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
     </Stack.Navigator>
   );
 };
@@ -116,9 +120,14 @@ export default function Tabs() {
         }}
       />
       <Tab.Screen
-        name="ProfileTab"
-        component={ProfileScreen}
-        options={{
+        name="SignInScreen"
+        component={SignInScreen}
+        options={({ route }) => ({
+          tabBarStyle: {
+            display: tabBarVisibility(route),
+            backgroundColor: "#0D1821",
+            height: 60,
+          },
           tabBarIcon: ({ focused }) => (
             <UserIcon
               width={25}
@@ -126,7 +135,7 @@ export default function Tabs() {
               fill={focused ? "#F6F9FF" : "#A9A9A9"}
             />
           ),
-        }}
+        })}
       />
     </Tab.Navigator>
   );
@@ -136,6 +145,9 @@ const tabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
 
   if (routeName == "Items") {
+    return "none";
+  }
+  if (routeName == "ProfileScreen") {
     return "none";
   }
   return "flex";

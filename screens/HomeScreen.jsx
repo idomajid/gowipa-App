@@ -65,7 +65,7 @@ export default function HomeScreen({ navigation }) {
           <View>
             <Text>Gowipa</Text>
           </View>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate("cartScreen")}>
             <Text>Click me</Text>
           </TouchableOpacity>
         </View>
