@@ -184,5 +184,8 @@ const tabBarVisibility = (route) => {
   if (routeName == "ProfileScreen") {
     return "none";
   }
+  if (routeName == "cartScreen") {
+    return "none";
+  }
   return "flex";
 };
