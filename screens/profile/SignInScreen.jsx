@@ -1,10 +1,16 @@
-import { StyleSheet, Text, View, Dimensions, Pressable } from "react-native";
-import FacebookIcon from "../assets/icons/social-media/facebook.svg";
-import GoogleIcon from "../assets/icons/social-media/google.svg";
-import TshirtIcon from "../assets/icons/t-shirt.svg";
-import React from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions,
+  Pressable,
+  TouchableOpacity,
+} from "react-native";
+import FacebookIcon from "../../assets/icons/social-media/facebook.svg";
+import GoogleIcon from "../../assets/icons/social-media/google.svg";
+import TshirtIcon from "../../assets/icons/t-shirt.svg";
 
-export default function ProfileScreen() {
+export default function SignInScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <View>
@@ -13,7 +19,7 @@ export default function ProfileScreen() {
 
       <View style={styles.circle}>
         <View style={{ alignItems: "center", marginBottom: 100 }}>
-          <Pressable onPress={() => console.log("worked Login Facebook")}>
+          <Pressable onPress={() => navigation.navigate("ProfileScreen")}>
             <View style={[styles.mainButton, styles.addCartButton]}>
               <View style={{ paddingRight: 10 }}>
                 <FacebookIcon width={25} height={25} fill="#404040" />
@@ -22,7 +28,7 @@ export default function ProfileScreen() {
               <Text
                 style={[styles.buttonTextLabel, styles.buttonBlackLabelColor]}
               >
-                Login with Facebook
+                profileScreen
               </Text>
             </View>
           </Pressable>
