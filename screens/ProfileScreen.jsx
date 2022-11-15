@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
   mainButton: {
     marginHorizontal: 20,
     flexDirection: "row",
-    marginHorizontal: 20,
+
     borderRadius: 2,
     justifyContent: "center",
     alignItems: "center",
