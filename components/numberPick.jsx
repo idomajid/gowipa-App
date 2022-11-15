@@ -8,9 +8,9 @@ export default function ChoosingSize(props) {
 
   return (
     <View>
-      <View style={{ alignItems: "center" }}>
-        <Text style={[props.styleFont, styles.title]}>{props.title}</Text>
-        <View style={{ flexDirection: "row" }}>
+      <View style={props.styleContainer}>
+        <Text style={props.styleFont}>{props.title}</Text>
+        <View style={[styles.numberPickLayout, props.numberPickLayout]}>
           <Pressable
             disabled={input == 1 ? true : false}
             style={styles.arrow}
@@ -58,9 +58,7 @@ const styles = StyleSheet.create({
     height: 30,
     padding: 4,
   },
-  title: {
-    fontFamily: "Josefin-Sans-Regular",
-    fontSize: 16,
-    lineHeight: 21,
+  numberPickLayout: {
+    flexDirection: "row",
   },
 });
