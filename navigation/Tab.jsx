@@ -8,6 +8,9 @@ import SearchScreen from "../screens/SearchScreen";
 import WishListScreen from "../screens/WishListScreen";
 import SignInScreen from "../screens/profile/SignInScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
+import EditProfileScreen from "../screens/profile/EditProfileScreen";
+import OrderItemScreen from "../screens/profile/OrderItemScreen";
+import UserAdressScreen from "../screens/profile/UserAdressScreen";
 import ItemScreen from "../screens/items/itemScreen";
 import CartScreen from "../screens/items/cartScreen";
 
@@ -90,6 +93,21 @@ const MyHomeTabScreen = ({ navigation }) => {
         name="ProfileScreen"
         component={ProfileScreen}
         options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="editProfileScreen"
+        component={EditProfileScreen}
+        options={() => ({ headerTitle: "Edit Profile" })}
+      />
+      <Stack.Screen
+        name="orderItemScreen"
+        component={OrderItemScreen}
+        options={() => ({ headerTitle: "Order" })}
+      />
+      <Stack.Screen
+        name="userAdressScreen"
+        component={UserAdressScreen}
+        options={() => ({ headerTitle: "Adress" })}
       />
     </Stack.Navigator>
   );
@@ -188,6 +206,15 @@ const tabBarVisibility = (route) => {
   }
 
   if (routeName == "cartScreen") {
+    return "none";
+  }
+  if (routeName == "editProfileScreen") {
+    return "none";
+  }
+  if (routeName == "orderItemScreen") {
+    return "none";
+  }
+  if (routeName == "userAdressScreen") {
     return "none";
   }
   return "flex";
