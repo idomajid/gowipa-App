@@ -1,5 +1,14 @@
-import { ImageBackground, View, Text, StyleSheet } from "react-native";
+import {
+  ImageBackground,
+  View,
+  Text,
+  Dimensions,
+  StyleSheet,
+} from "react-native";
 import SettingBtn from "../../components/assetBtns/SettingBtn";
+
+const windowWidth = Dimensions.get("window").width;
+const windowHeight = Dimensions.get("window").height;
 export default function ProfileScreen() {
   return (
     <View style={styles.container}>
@@ -8,12 +17,15 @@ export default function ProfileScreen() {
         resizeMode="cover"
         style={styles.image}
       >
-        <Text style={styles.imageText}>Jane Miss Doe</Text>
+        <Text style={styles.imageText}>Jane E. Bola</Text>
       </ImageBackground>
-      <View style={{ marginVertical: 10 }}>
+      <View style={styles.AccountLabelLayout}>
         <Text style={styles.AccountLabel}>Account</Text>
       </View>
-      <SettingBtn />
+      <SettingBtn title="Edit Profile" onPress={() => console.log("1")} />
+      <SettingBtn title="Order" onPress={() => console.log("2")} />
+      <SettingBtn title="Address" onPress={() => console.log("3")} />
+      <SettingBtn title="Log Out" onPress={() => console.log("4")} />
     </View>
   );
 }
@@ -23,6 +35,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     marginTop: 20,
+    backgroundColor: "#fff",
   },
   image: {
     justifyContent: "center",
@@ -41,5 +54,12 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 14,
     color: "#404040",
+  },
+  AccountLabelLayout: {
+    paddingVertical: 10,
+    borderBottomColor: "#C7C7C7",
+    borderBottomWidth: 1,
+    width: windowWidth,
+    alignItems: "center",
   },
 });
