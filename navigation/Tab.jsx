@@ -85,9 +85,12 @@ const MyHomeTabScreen = ({ navigation }) => {
             </TouchableOpacity>
           ),
         })}
-        // options={{ headerShown: false, title: `My Cart` }}
       />
-      <Stack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <Stack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ headerShown: false }}
+      />
     </Stack.Navigator>
   );
 };
@@ -175,15 +178,15 @@ export default function Tabs() {
   );
 }
 
+// dynamic navigator : https://www.youtube.com/watch?v=ihfS3kEvH2o
+
 const tabBarVisibility = (route) => {
   const routeName = getFocusedRouteNameFromRoute(route) ?? "Feed";
 
   if (routeName == "Items") {
     return "none";
   }
-  if (routeName == "ProfileScreen") {
-    return "none";
-  }
+
   if (routeName == "cartScreen") {
     return "none";
   }
