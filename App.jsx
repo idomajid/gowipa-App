@@ -1,4 +1,5 @@
 import { NavigationContainer } from "@react-navigation/native";
+import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import Tab from "./navigation/Tab";
 import Apploading from "expo-app-loading";
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Tab />
+      <StatusBar style="auto" />
     </NavigationContainer>
   );
 }
