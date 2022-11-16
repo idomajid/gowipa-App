@@ -9,7 +9,8 @@ import SettingBtn from "../../components/assetBtns/SettingBtn";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-export default function ProfileScreen() {
+
+export default function ProfileScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -22,9 +23,18 @@ export default function ProfileScreen() {
       <View style={styles.AccountLabelLayout}>
         <Text style={styles.AccountLabel}>Account</Text>
       </View>
-      <SettingBtn title="Edit Profile" onPress={() => console.log("1")} />
-      <SettingBtn title="Order" onPress={() => console.log("2")} />
-      <SettingBtn title="Address" onPress={() => console.log("3")} />
+      <SettingBtn
+        title="Edit Profile"
+        onPress={() => navigation.navigate("editProfileScreen")}
+      />
+      <SettingBtn
+        title="Order"
+        onPress={() => navigation.navigate("orderItemScreen")}
+      />
+      <SettingBtn
+        title="Address"
+        onPress={() => navigation.navigate("userAdressScreen")}
+      />
       <SettingBtn title="Log Out" onPress={() => console.log("4")} />
     </View>
   );
