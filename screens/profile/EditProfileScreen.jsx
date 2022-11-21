@@ -6,16 +6,58 @@ import {
   Dimensions,
   TextInput,
   Pressable,
+  Platform,
 } from "react-native";
+
 import DateTimePicker from "@react-native-community/datetimepicker";
 
 const windowWidth = Dimensions.get("window").width;
 
 export default function EditProfileScreen() {
   const [text, onChangeText] = useState("");
+  // Date Picker : https://www.youtube.com/watch?v=Imkw-xFFLeE
+  const [date, setDate] = useState(new Date());
+  const [mode, setMode] = useState("date");
+  const [show, setShow] = useState(false);
+  const [textDate, setTextDate] = useState("Empty");
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setShow(Platform.OS === "ios");
+    setDate(currentDate);
+
+    let tempDate = new Date(currentDate);
+    let fDate =
+      tempDate.getDate() +
+      "/" +
+      (tempDate.getMonth() + 1) +
+      "/" +
+      tempDate.getFullYear();
+    let fTime =
+      "Hours: " + tempDate.getHours() + "| Minutes: " + tempDate.getMinutes();
+    setTextDate(fDate + "/n" + fTime);
+    console.log(fDate + " (" + fTime + ")");
+  };
+
+  const showMode = (currenMode) => {
+    setShow(true);
+    setMode(currenMode);
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.inputLayout}>
+        <Text>{textDate}</Text>
+        {show && (
+          <DateTimePicker
+            testID="dateTimePicker"
+            value={date}
+            mode={mode}
+            is24Hour={true}
+            display="default"
+            onChange={onChange}
+          />
+        )}
         <Text style={styles.inputLabel}>Username</Text>
         <TextInput
           style={styles.input}
@@ -51,10 +93,11 @@ export default function EditProfileScreen() {
           placeholder="Email"
         />
       </View>
+
       {/* <View style={styles.inputLayout}>
         <DateTimePicker value={new Date()} />
       </View> */}
-      <Pressable onPress={() => console.log("worked Perfectly")}>
+      <Pressable onPress={() => showMode("date")}>
         <View style={[styles.editProfileButton, styles.mainButton]}>
           <Text style={[styles.buttonTextLabel, styles.buttonLabelColor]}>
             Edit Profile
