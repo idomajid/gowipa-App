@@ -1,5 +1,11 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { View, Image, TouchableOpacity, Pressable, Text } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  Pressable,
+  Text,
+  StyleSheet,
+} from "react-native";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -65,7 +71,6 @@ const MyHomeTabScreen = ({ navigation }) => {
             <TouchableOpacity onPress={() => navigation.goBack()}>
               <View
                 style={{
-                  width: 100,
                   height: 20,
                   flexDirection: "row",
                   justifyContent: "center",
@@ -97,17 +102,102 @@ const MyHomeTabScreen = ({ navigation }) => {
       <Stack.Screen
         name="editProfileScreen"
         component={EditProfileScreen}
-        options={() => ({ headerTitle: "Edit Profile" })}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  height: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  Edit Profile
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen
         name="orderItemScreen"
         component={OrderItemScreen}
-        options={() => ({ headerTitle: "Order" })}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  height: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    height: 20,
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  Order
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
       />
       <Stack.Screen
         name="userAdressScreen"
         component={UserAdressScreen}
-        options={() => ({ headerTitle: "Adress" })}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  height: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  Address
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
       />
     </Stack.Navigator>
   );
