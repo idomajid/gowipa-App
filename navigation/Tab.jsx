@@ -14,11 +14,15 @@ import SearchScreen from "../screens/SearchScreen";
 import WishListScreen from "../screens/WishListScreen";
 import SignInScreen from "../screens/profile/SignInScreen";
 import ProfileScreen from "../screens/profile/ProfileScreen";
+//Profile
 import EditProfileScreen from "../screens/profile/EditProfileScreen";
 import OrderItemScreen from "../screens/profile/OrderItemScreen";
 import UserAdressScreen from "../screens/profile/UserAdressScreen";
 import ItemScreen from "../screens/items/itemScreen";
 import CartScreen from "../screens/items/cartScreen";
+//Order
+import OnProcessScreen from "../screens/profile/order/OnProcess";
+import DeliveredScreen from "../screens/profile/order/Delivered";
 
 import HeartIcon from "../assets/tabIcons/heart.svg";
 import HomeIcon from "../assets/tabIcons/home.svg";
@@ -199,6 +203,72 @@ const MyHomeTabScreen = ({ navigation }) => {
           ),
         })}
       />
+      <Stack.Screen
+        name="onProcessScreen"
+        component={OnProcessScreen}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  height: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  On Process
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="deliveredScreen"
+        component={DeliveredScreen}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  height: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  Delivered
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 };
@@ -307,5 +377,12 @@ const tabBarVisibility = (route) => {
   if (routeName == "userAdressScreen") {
     return "none";
   }
+  if (routeName == "onProcessScreen") {
+    return "none";
+  }
+  if (routeName == "deliveredScreen") {
+    return "none";
+  }
+
   return "flex";
 };
