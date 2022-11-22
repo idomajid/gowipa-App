@@ -7,6 +7,7 @@ import {
   TextInput,
   Pressable,
   Platform,
+  Button,
 } from "react-native";
 
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -19,7 +20,7 @@ export default function EditProfileScreen() {
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState("date");
   const [show, setShow] = useState(false);
-  const [textDate, setTextDate] = useState("Empty");
+  const [textDate, setTextDate] = useState("");
 
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
@@ -35,7 +36,7 @@ export default function EditProfileScreen() {
       tempDate.getFullYear();
     let fTime =
       "Hours: " + tempDate.getHours() + "| Minutes: " + tempDate.getMinutes();
-    setTextDate(fDate + "/n" + fTime);
+    setTextDate(fDate);
     console.log(fDate + " (" + fTime + ")");
   };
 
@@ -47,18 +48,8 @@ export default function EditProfileScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.inputLayout}>
-        <Text>{textDate}</Text>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )}
         <Text style={styles.inputLabel}>Username</Text>
+
         <TextInput
           style={styles.input}
           onChangeText={onChangeText}
@@ -93,11 +84,37 @@ export default function EditProfileScreen() {
           placeholder="Email"
         />
       </View>
+      <View style={styles.inputLayout}>
+        <Text style={styles.inputLabel}>Date of birth</Text>
+        <View style={{ flexDirection: "row" }}>
+          <TextInput
+            style={styles.inputDate}
+            onChangeText={onChangeText}
+            value={textDate}
+            placeholder="Date of birth"
+            editable={false}
+          />
+          {!show ? (
+            <Button title="Pick a date" onPress={() => showMode("date")} />
+          ) : (
+            <View style={{ width: 100 }}>
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                positiveButton={{ label: "dwiqqidqw", textColor: "green" }}
+                display="default"
+                onChange={onChange}
+              />
+            </View>
+          )}
+        </View>
+      </View>
 
       {/* <View style={styles.inputLayout}>
         <DateTimePicker value={new Date()} />
       </View> */}
-      <Pressable onPress={() => showMode("date")}>
+      <Pressable onPress={() => console.log("yeesss")}>
         <View style={[styles.editProfileButton, styles.mainButton]}>
           <Text style={[styles.buttonTextLabel, styles.buttonLabelColor]}>
             Edit Profile
@@ -126,6 +143,12 @@ const styles = StyleSheet.create({
     width: windowWidth - 60,
     borderBottomWidth: 1,
   },
+  inputDate: {
+    height: 40,
+    width: windowWidth - 160,
+    borderBottomWidth: 1,
+  },
+
   inputLayout: {
     marginHorizontal: 30,
     marginTop: 30,
