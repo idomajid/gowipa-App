@@ -297,7 +297,7 @@ const MyHomeTabScreen = ({ navigation }) => {
                     lineHeight: 22,
                   }}
                 >
-                  Add new address
+                  Set Address
                 </Text>
               </View>
             </TouchableOpacity>
@@ -416,6 +416,9 @@ const tabBarVisibility = (route) => {
     return "none";
   }
   if (routeName == "deliveredScreen") {
+    return "none";
+  }
+  if (routeName == "addNewAdressScreen") {
     return "none";
   }
 
