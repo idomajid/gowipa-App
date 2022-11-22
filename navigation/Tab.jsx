@@ -23,6 +23,8 @@ import CartScreen from "../screens/items/cartScreen";
 //Order
 import OnProcessScreen from "../screens/profile/order/OnProcess";
 import DeliveredScreen from "../screens/profile/order/Delivered";
+// Adress
+import AddNewAdressScreen from "../screens/profile/adress/AddNewAdress";
 
 import HeartIcon from "../assets/tabIcons/heart.svg";
 import HomeIcon from "../assets/tabIcons/home.svg";
@@ -239,6 +241,39 @@ const MyHomeTabScreen = ({ navigation }) => {
       <Stack.Screen
         name="deliveredScreen"
         component={DeliveredScreen}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  height: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  Delivered
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
+      />
+      <Stack.Screen
+        name="addNewAdressScreen"
+        component={AddNewAdressScreen}
         options={() => ({
           headerTitle: "",
           headerTransparent: true,
