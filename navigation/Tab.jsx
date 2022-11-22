@@ -297,7 +297,7 @@ const MyHomeTabScreen = ({ navigation }) => {
                     lineHeight: 22,
                   }}
                 >
-                  Delivered
+                  Add new address
                 </Text>
               </View>
             </TouchableOpacity>
