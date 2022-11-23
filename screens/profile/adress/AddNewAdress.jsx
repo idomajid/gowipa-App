@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -6,12 +7,11 @@ import {
   TextInput,
   Pressable,
 } from "react-native";
-import { useState } from "react";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
-export default function AddNewAdress() {
-  const [text, setText] = useState("");
+export default function AddNewAdress({ navigation }) {
+  const [preferenceName, SetPreferenceName] = useState("");
   const [name, setName] = useState("");
   const [addressOne, setAddressOne] = useState("");
   const [addressTwo, setAddressTwo] = useState("");
@@ -26,8 +26,8 @@ export default function AddNewAdress() {
         <Text style={styles.inputLabel}>Preference Name</Text>
         <TextInput
           style={styles.input}
-          onChangeText={setText}
-          value={text}
+          onChangeText={SetPreferenceName}
+          value={preferenceName}
           placeholder="Home"
         />
       </View>
@@ -96,7 +96,7 @@ export default function AddNewAdress() {
           maxLength={10}
         />
       </View>
-      <Pressable onPress={() => console.log("dqwdqw")}>
+      <Pressable onPress={() => navigation.navigate("addressFilledScreen")}>
         <View style={[styles.editProfileButton, styles.mainButton]}>
           <Text style={[styles.buttonTextLabel, styles.buttonLabelColor]}>
             Add new Adress
