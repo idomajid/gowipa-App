@@ -1,4 +1,3 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   View,
   TouchableOpacity,
@@ -6,8 +5,10 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { getFocusedRouteNameFromRoute } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
 
 import HomeScreen from "../screens/HomeScreen";
 import SearchScreen from "../screens/SearchScreen";
@@ -33,6 +34,7 @@ import UserIcon from "../assets/tabIcons/user.svg";
 import ArrowBackIcon from "../assets/icons/arrowBack.svg";
 
 const Tab = createBottomTabNavigator();
+const TabTop = createMaterialTopTabNavigator();
 const Stack = createNativeStackNavigator();
 
 const MyHomeTabScreen = ({ navigation }) => {
@@ -205,6 +207,7 @@ const MyHomeTabScreen = ({ navigation }) => {
           ),
         })}
       />
+
       <Stack.Screen
         name="onProcessScreen"
         component={OnProcessScreen}
@@ -307,6 +310,18 @@ const MyHomeTabScreen = ({ navigation }) => {
     </Stack.Navigator>
   );
 };
+
+// export default function TopTabs() {
+//   return (
+//     <TabTop.Navigator>
+
+//       <TabTop.Screen name="onProcessScreen"
+//         component={OnProcessScreen} />
+//       <TabTop.Screen  name="deliveredScreen"
+//         component={DeliveredScreen} />
+//     </TabTop.Navigator>
+//   );
+// }
 
 export default function Tabs() {
   return (
