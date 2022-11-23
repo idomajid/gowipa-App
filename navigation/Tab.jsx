@@ -26,6 +26,7 @@ import OnProcessScreen from "../screens/profile/order/OnProcess";
 import DeliveredScreen from "../screens/profile/order/Delivered";
 // Adress
 import AddNewAdressScreen from "../screens/profile/adress/AddNewAdress";
+import AddressFilledScreen from "../screens/profile/adress/AddressFilled";
 
 import HeartIcon from "../assets/tabIcons/heart.svg";
 import HomeIcon from "../assets/tabIcons/home.svg";
@@ -307,6 +308,40 @@ const MyHomeTabScreen = ({ navigation }) => {
           ),
         })}
       />
+
+      <Stack.Screen
+        name="addressFilledScreen"
+        component={AddressFilledScreen}
+        options={() => ({
+          headerTitle: "",
+          headerTransparent: true,
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.goBack()}>
+              <View
+                style={{
+                  height: 20,
+                  flexDirection: "row",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  boxSizing: "border-box",
+                }}
+              >
+                <ArrowBackIcon width={30} height={30} fill={"#000"} />
+                <Text
+                  style={{
+                    paddingLeft: 5,
+                    fontFamily: "Josefin-Sans-Regular",
+                    fontSize: 18,
+                    lineHeight: 22,
+                  }}
+                >
+                  Address Filled
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ),
+        })}
+      />
     </Stack.Navigator>
   );
 };
@@ -434,6 +469,9 @@ const tabBarVisibility = (route) => {
     return "none";
   }
   if (routeName == "addNewAdressScreen") {
+    return "none";
+  }
+  if (routeName == "addressFilledScreen") {
     return "none";
   }
 
