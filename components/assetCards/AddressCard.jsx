@@ -38,6 +38,7 @@ const styles = StyleSheet.create({
   container: {
     width: windowWidth - 60,
     borderWidth: 0.5,
+    borderRadius: 2,
   },
   addressText: {
     marginVertical: 3,
