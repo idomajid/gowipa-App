@@ -43,7 +43,7 @@
     "react-native-web": "~0.18.9"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9",
+    "@babel/core": "^7.19.3",
     "@faker-js/faker": "^7.3.0",
     "react-native-svg-transformer": "^1.0.0"
   },
