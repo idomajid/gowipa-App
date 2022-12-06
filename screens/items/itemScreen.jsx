@@ -22,18 +22,25 @@ import AlertCartCard from "../../components/assetCards/CostumAlertCard";
 
 import ProductHotItemCard from "../../components/productHotItemCard";
 import NumberPick from "../../components/numberPick";
+import { eq } from "react-native-reanimated";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ItemScreen({ navigation, route }) {
+export default function ItemScreen({ route }) {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const [getProduct, setGetProduct] = useState(null);
   const [getRecommendedProduct, setGetRecommendedProduct] = useState(null);
   const [addCart, setAddCart] = useState(false);
+  // Add to Cart
+  const [idProduct, setIdProduct] = useState(null);
+  const [titleProduct, setTitleProduct] = useState(null);
+  const [priceProduct, setPriceProduct] = useState(null);
+  const [imageUrlProduct, setImageUrlProduct] = useState(null);
+  const [size] = useState(35);
 
-  // const [wishList, setWishList] = useState(false);
+  const [wishList, setWishList] = useState(false);
 
   // const [images, setImages] = useState();
   // const [images, setImages] = useState([
@@ -45,14 +52,26 @@ export default function ItemScreen({ navigation, route }) {
   const id = route.params?.id;
 
   useEffect(() => {
+    //https://stackoverflow.com/questions/70568712/why-my-data-get-undefined-when-i-successfully-get-the-response
     const fetchProduct = async () => {
       const { data: products, error } = await supabase
         .from("products")
-        .select()
+        .select(
+          "id ,title, price, desConclusion, description, category, imageUrl"
+        )
         .eq("id", id);
+
+      let productId = await products[0].id;
+      let productTitle = await products[0].title;
+      let productPrice = await products[0].price;
+      let productImageUrl = await products[0].imageUrl;
 
       if (products) {
         setGetProduct(products);
+        setIdProduct(productId);
+        setTitleProduct(productTitle);
+        setPriceProduct(productPrice);
+        setImageUrlProduct(productImageUrl);
         // setWishList(products.isWishlist);
       }
 
@@ -71,6 +90,17 @@ export default function ItemScreen({ navigation, route }) {
     }
     productFetch();
   }, []);
+
+  const addToCart = async () => {
+    const { error } = await supabase.from("product_cart").insert({
+      title_product: titleProduct,
+      id_product: idProduct,
+      price_product: priceProduct,
+      imageUrl_product: imageUrlProduct,
+      size_product: size,
+    });
+    console.log({ error });
+  };
 
   // useEffect(() => {
   //   const FavoriteItems = async () => {
@@ -113,8 +143,8 @@ export default function ItemScreen({ navigation, route }) {
       <View style={styles.container}>
         {getProduct.map((product) => {
           return (
-            <>
-              <View key={product.id}>
+            <View key={product?.id}>
+              <View>
                 <View>
                   <Carousel
                     autoPlay={false}
@@ -125,7 +155,7 @@ export default function ItemScreen({ navigation, route }) {
                       <Image
                         style={styles.imageJumbotron}
                         source={[{ uri: item.imageUrl }]}
-                        key={index}
+                        key={item?.id}
                       />
                     )}
                   />
@@ -170,7 +200,8 @@ export default function ItemScreen({ navigation, route }) {
 
                     <NumberPick
                       styleContainer={{ alignItems: "center" }}
-                      title="Quantity"
+                      title="Size"
+                      inputValue={size}
                       styleFont={styles.titleNumberPick}
                     />
                   </View>
@@ -227,12 +258,12 @@ export default function ItemScreen({ navigation, route }) {
                       <View style={styles.modalView}>
                         <Image
                           source={[{ uri: product?.imageUrl }]}
-                          style={{ width: 308, height: 160 }}
+                          style={{ width: 320, height: 160 }}
                         />
                         <View
                           style={{
                             flexDirection: "row",
-                            marginHorizontal: 30,
+                            marginHorizontal: 20,
                             marginVertical: 10,
                             paddingVertical: 2,
                             justifyContent: "space-between",
@@ -303,7 +334,7 @@ export default function ItemScreen({ navigation, route }) {
                                 styles.buttonBlackLabelColor,
                               ]}
                             >
-                              Go to cart
+                              Continue shopping
                             </Text>
                           </Pressable>
                         </View>
@@ -312,7 +343,7 @@ export default function ItemScreen({ navigation, route }) {
                   </TouchableOpacity>
                 </AlertCartCard>
 
-                <Pressable onPress={() => console.log("worked Buy Now")}>
+                <Pressable onPress={() => addToCart()}>
                   <View style={[styles.buyNowButton, styles.mainButton]}>
                     <Text
                       style={[
@@ -337,7 +368,7 @@ export default function ItemScreen({ navigation, route }) {
                   </View>
                 </Pressable>
               </View>
-            </>
+            </View>
           );
         })}
 
@@ -488,7 +519,7 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(52, 52, 52, 0.8)",
   },
   modalView: {
-    width: 308,
+    width: 320,
     height: 295,
     backgroundColor: "white",
     borderRadius: 2,
