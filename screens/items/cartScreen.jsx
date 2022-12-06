@@ -8,7 +8,7 @@ import {
   ScrollView,
 } from "react-native";
 import React from "react";
-import WishlistCard from "../../components/assetCards/ReausableCard";
+import CartCard from "../../components/assetCards/ReausableCard";
 import NumberPick from "../../components/numberPick";
 
 const windowWidth = Dimensions.get("window").width;
@@ -19,25 +19,27 @@ export default function CartScreen() {
     <View style={styles.container}>
       <View style={{ top: 60 }}>
         <ScrollView>
-          <WishlistCard>
+          <CartCard title="Cdoiqwdjoiq" price={200}>
             <NumberPick
               numberPickLayout={styles.numberPickLayout}
               styleContainer={styles.styleContainer}
               title="Size"
               styleFont={styles.styleFont}
+              inputValue={40}
             />
             <NumberPick
               numberPickLayout={styles.numberPickLayout}
               styleContainer={styles.styleContainer}
               title="Quantity"
               styleFont={styles.styleFont}
+              inputValue={1}
             />
             <TouchableOpacity onPress={() => console.log("worked Add to cart")}>
               <View style={styles.buttonContainer}>
                 <Text style={styles.buttonText}>Delete Item</Text>
               </View>
             </TouchableOpacity>
-          </WishlistCard>
+          </CartCard>
 
           <View>
             <Pressable onPress={() => console.log("Disable")}>
