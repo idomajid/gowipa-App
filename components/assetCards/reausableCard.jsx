@@ -27,9 +27,11 @@ export default function ReausableCard(props) {
           />
         </View>
         <View style={styles.labelLayout}>
-          <Text style={styles.fontTitle}>This is a title for a card</Text>
-          <Text style={styles.fontStock}>Stock avaible</Text>
-          <GradientText styleFont={styles.priceProduct}>$200</GradientText>
+          <Text style={styles.fontTitle}>{props.title}</Text>
+          <Text style={styles.fontStock}>Stock available</Text>
+          <GradientText
+            styleFont={styles.priceProduct}
+          >{`$ ${props.price}`}</GradientText>
           {props.children}
         </View>
       </View>
