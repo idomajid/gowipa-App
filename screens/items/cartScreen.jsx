@@ -67,7 +67,7 @@ export default function CartScreen() {
           }}
         />
 
-        <View style={{ marginBottom: 30 }}>
+        <View style={{ marginBottom: 30, marginTop: 10 }}>
           <Pressable onPress={() => console.log("Disable")}>
             <View style={[styles.buyNowButton, styles.mainButton]}>
               <Text
