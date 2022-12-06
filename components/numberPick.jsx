@@ -4,7 +4,7 @@ import ArrowLeftIcon from "../assets/icons/arrowLeft.svg";
 import ArrowRightIcon from "../assets/icons/arrowRight.svg";
 
 export default function ChoosingSize(props) {
-  const [input, setInput] = useState(1);
+  const [input, setInput] = useState(props.inputValue);
 
   return (
     <View>
