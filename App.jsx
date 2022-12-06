@@ -3,7 +3,10 @@ import { StatusBar } from "expo-status-bar";
 import { useFonts } from "expo-font";
 import Tab from "./navigation/Tab";
 import Apploading from "expo-app-loading";
-import "react-native-url-polyfill/auto";
+
+import { LogBox } from "react-native";
+
+LogBox.ignoreLogs(["Overwriting fontFamily style attribute preprocessor"]);
 
 export default function App() {
   const [fontLoaded] = useFonts({
