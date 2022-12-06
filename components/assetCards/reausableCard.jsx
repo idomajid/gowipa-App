@@ -23,7 +23,7 @@ export default function ReausableCard(props) {
         >
           <Image
             style={styles.imageShapes}
-            source={require("../../assets/images/jumtron/jumbotron.jpg")}
+            source={[{ uri: props.imageUrl }]}
           />
         </View>
         <View style={styles.labelLayout}>
