@@ -5,54 +5,79 @@ import {
   Dimensions,
   Pressable,
   TouchableOpacity,
-  ScrollView,
+  FlatList,
 } from "react-native";
-import React from "react";
+import { useState, useEffect } from "react";
 import CartCard from "../../components/assetCards/ReausableCard";
 import NumberPick from "../../components/numberPick";
+import { supabase } from "../../supabase";
 
 const windowWidth = Dimensions.get("window").width;
-const windowHeight = Dimensions.get("window").height;
 
 export default function CartScreen() {
+  const [cartItem, setCartItem] = useState(null);
+  useEffect(() => {
+    async function cartFetch() {
+      let { data, error } = await supabase
+        .from("product_cart")
+        .select("id,title_product,price_product,size_product,imageUrl_product");
+      setCartItem(data);
+      console.log(error);
+    }
+    cartFetch();
+  }, []);
+
+  console.log({ cartItem });
   return (
     <View style={styles.container}>
-      <View style={{ top: 60 }}>
-        <ScrollView>
-          <CartCard title="Cdoiqwdjoiq" price={200}>
-            <NumberPick
-              numberPickLayout={styles.numberPickLayout}
-              styleContainer={styles.styleContainer}
-              title="Size"
-              styleFont={styles.styleFont}
-              inputValue={40}
-            />
-            <NumberPick
-              numberPickLayout={styles.numberPickLayout}
-              styleContainer={styles.styleContainer}
-              title="Quantity"
-              styleFont={styles.styleFont}
-              inputValue={1}
-            />
-            <TouchableOpacity onPress={() => console.log("worked Add to cart")}>
-              <View style={styles.buttonContainer}>
-                <Text style={styles.buttonText}>Delete Item</Text>
-              </View>
-            </TouchableOpacity>
-          </CartCard>
-
-          <View>
-            <Pressable onPress={() => console.log("Disable")}>
-              <View style={[styles.buyNowButton, styles.mainButton]}>
-                <Text
-                  style={[styles.buttonTextLabel, styles.buttonWhiteLabelColor]}
+      <View style={{ marginTop: 60 }}>
+        <FlatList
+          data={cartItem}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => {
+            return (
+              <CartCard
+                title={item.title_product}
+                price={item.price_product}
+                imageUrl={item.imageUrl_product}
+              >
+                <NumberPick
+                  numberPickLayout={styles.numberPickLayout}
+                  styleContainer={styles.styleContainer}
+                  title="Size"
+                  styleFont={styles.styleFont}
+                  inputValue={item.size_product}
+                />
+                <NumberPick
+                  numberPickLayout={styles.numberPickLayout}
+                  styleContainer={styles.styleContainer}
+                  title="Quantity"
+                  styleFont={styles.styleFont}
+                  inputValue={1}
+                />
+                <TouchableOpacity
+                  onPress={() => console.log("worked Add to cart")}
                 >
-                  Proceed to checkout
-                </Text>
-              </View>
-            </Pressable>
-          </View>
-        </ScrollView>
+                  <View style={styles.buttonContainer}>
+                    <Text style={styles.buttonText}>Delete Item</Text>
+                  </View>
+                </TouchableOpacity>
+              </CartCard>
+            );
+          }}
+        />
+
+        <View style={{ marginBottom: 30 }}>
+          <Pressable onPress={() => console.log("Disable")}>
+            <View style={[styles.buyNowButton, styles.mainButton]}>
+              <Text
+                style={[styles.buttonTextLabel, styles.buttonWhiteLabelColor]}
+              >
+                Proceed to checkout
+              </Text>
+            </View>
+          </Pressable>
+        </View>
       </View>
     </View>
   );
@@ -61,9 +86,10 @@ export default function CartScreen() {
 const styles = StyleSheet.create({
   container: {
     width: windowWidth,
+
     flex: 1,
     alignItems: "center",
-    backgroundColor: "#ffff",
+    backgroundColor: "#fff",
   },
   styleContainer: {
     alignItems: "center",
