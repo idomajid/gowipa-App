@@ -6,8 +6,9 @@ import {
   Pressable,
   TouchableOpacity,
   FlatList,
+  DevSettings,
 } from "react-native";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import CartCard from "../../components/assetCards/ReausableCard";
 import NumberPick from "../../components/numberPick";
 import { supabase } from "../../supabase";
@@ -17,6 +18,7 @@ const windowWidth = Dimensions.get("window").width;
 export default function CartScreen() {
   const [cartItem, setCartItem] = useState(null);
   const [checkoutId, setCheckoutId] = useState(null);
+
   const [orderBy, setOrderBy] = useState("created_at");
 
   // const deleteHandle = (id) => {
@@ -37,7 +39,7 @@ export default function CartScreen() {
       setCartItem(data);
     }
     cartFetch();
-  }, []);
+  }, [cartItem]);
 
   const handleDelete = async () => {
     const { data: products, error } = await supabase
@@ -52,7 +54,6 @@ export default function CartScreen() {
 
     if (products) {
       console.log(products);
-      // onDelete(smoothie.id);
     }
   };
 
