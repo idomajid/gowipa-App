@@ -27,7 +27,7 @@ import { eq } from "react-native-reanimated";
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
 
-export default function ItemScreen({ route }) {
+export default function ItemScreen({ route, navigation }) {
   const [textShown, setTextShown] = useState(false);
   const [lengthMore, setLengthMore] = useState(false);
   const [getProduct, setGetProduct] = useState(null);
@@ -100,6 +100,7 @@ export default function ItemScreen({ route }) {
       size_product: size,
     });
     console.log({ error });
+    navigation.navigate("cartScreen");
   };
 
   // useEffect(() => {
