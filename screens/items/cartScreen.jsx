@@ -16,18 +16,52 @@ const windowWidth = Dimensions.get("window").width;
 
 export default function CartScreen() {
   const [cartItem, setCartItem] = useState(null);
+  const [checkoutId, setCheckoutId] = useState(null);
+  const [orderBy, setOrderBy] = useState("created_at");
+
+  // const deleteHandle = (id) => {
+  //   setCartItem((PrevCardItems) => {
+  //     return PrevCardItems.filter((sm) => sm.id !== id);
+  //   });
+  // };
+
   useEffect(() => {
     async function cartFetch() {
       let { data, error } = await supabase
         .from("product_cart")
-        .select("id,title_product,price_product,size_product,imageUrl_product");
+        .select("id,title_product,price_product,size_product,imageUrl_product")
+        .order(orderBy, { ascending: false });
+
+      let productId = await data[0].id;
+      setCheckoutId(productId);
       setCartItem(data);
-      console.log(error);
     }
     cartFetch();
   }, []);
 
-  console.log({ cartItem });
+  const handleDelete = async () => {
+    const { data: products, error } = await supabase
+      .from("product_cart")
+      .delete()
+      .eq("id", checkoutId)
+      .select();
+
+    if (error) {
+      console.log(error);
+    }
+
+    if (products) {
+      console.log(products);
+      // onDelete(smoothie.id);
+    }
+  };
+
+  // const deleteCart = async () => {
+  //   const { error } = await supabase.from("countries").delete().eq(checkoutId);
+
+  //   console.log({ error });
+  // };
+
   return (
     <View style={styles.container}>
       <View style={{ marginTop: 60 }}>
@@ -55,9 +89,7 @@ export default function CartScreen() {
                   styleFont={styles.styleFont}
                   inputValue={1}
                 />
-                <TouchableOpacity
-                  onPress={() => console.log("worked Add to cart")}
-                >
+                <TouchableOpacity activeOpacity={0.4} onPress={handleDelete}>
                   <View style={styles.buttonContainer}>
                     <Text style={styles.buttonText}>Delete Item</Text>
                   </View>
