@@ -100,7 +100,6 @@ export default function ItemScreen({ route, navigation }) {
       size_product: size,
     });
     console.log({ error });
-    navigation.navigate("cartScreen");
   };
 
   // useEffect(() => {
@@ -138,6 +137,21 @@ export default function ItemScreen({ route, navigation }) {
   if (!getProduct) {
     return <Apploading />;
   }
+
+  const buyNowHandler = () => {
+    addToCart();
+    return navigation.navigate("cartScreen");
+  };
+
+  const addtoCartHandler = () => {
+    setAddCart(true);
+    return addToCart();
+  };
+
+  const onProcessHandler = () => {
+    setAddCart(!addCart);
+    return navigation.navigate("cartScreen");
+  };
 
   return (
     <ScrollView>
@@ -311,7 +325,7 @@ export default function ItemScreen({ route, navigation }) {
                               styles.modalButton,
                               styles.modalBackgroundColorBlack,
                             ]}
-                            onPress={() => setAddCart(!addCart)}
+                            onPress={onProcessHandler}
                           >
                             <Text
                               style={[
@@ -344,7 +358,7 @@ export default function ItemScreen({ route, navigation }) {
                   </TouchableOpacity>
                 </AlertCartCard>
 
-                <Pressable onPress={() => addToCart()}>
+                <Pressable onPress={buyNowHandler}>
                   <View style={[styles.buyNowButton, styles.mainButton]}>
                     <Text
                       style={[
@@ -356,7 +370,7 @@ export default function ItemScreen({ route, navigation }) {
                     </Text>
                   </View>
                 </Pressable>
-                <Pressable onPress={() => setAddCart(true)}>
+                <Pressable onPress={addtoCartHandler}>
                   <View style={[styles.mainButton, styles.addCartButton]}>
                     <Text
                       style={[
