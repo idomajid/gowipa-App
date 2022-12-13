@@ -22,7 +22,6 @@ import AlertCartCard from "../../components/assetCards/CostumAlertCard";
 
 import ProductHotItemCard from "../../components/productHotItemCard";
 import NumberPick from "../../components/numberPick";
-import { eq } from "react-native-reanimated";
 
 const windowWidth = Dimensions.get("window").width;
 const windowHeight = Dimensions.get("window").height;
@@ -39,6 +38,7 @@ export default function ItemScreen({ route, navigation }) {
   const [priceProduct, setPriceProduct] = useState(null);
   const [imageUrlProduct, setImageUrlProduct] = useState(null);
   const [size] = useState(35);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [wishList, setWishList] = useState(false);
 
@@ -139,18 +139,24 @@ export default function ItemScreen({ route, navigation }) {
   }
 
   const buyNowHandler = () => {
+    setIsLoading(true);
     addToCart();
-    return navigation.navigate("cartScreen");
+    navigation.navigate("cartScreen");
+    setIsLoading(false);
   };
 
   const addtoCartHandler = () => {
+    setIsLoading(true);
     setAddCart(true);
-    return addToCart();
+    addToCart();
+    setIsLoading(false);
   };
 
   const onProcessHandler = () => {
+    setIsLoading(true);
     setAddCart(!addCart);
-    return navigation.navigate("cartScreen");
+    navigation.navigate("cartScreen");
+    setIsLoading(false);
   };
 
   return (
